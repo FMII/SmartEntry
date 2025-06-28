@@ -1,0 +1,66 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto p-6 border rounded shadow space-y-4">
+  <!-- Mensajes del backend -->
+  <div *ngIf="errorMessages.length > 0" class="text-red-600">
+    <ul>
+      <li *ngFor="let error of errorMessages">{{ error }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="successMessage" class="text-green-600">
+    {{ successMessage }}
+  </div>
+
+  <!-- Nombre -->
+  <div>
+    <label for="first_name" class="block font-medium mb-1">Nombre:</label>
+    <input id="first_name" type="text" formControlName="first_name" class="w-full border rounded px-3 py-2" />
+    <div *ngIf="registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched" class="text-red-500">
+      El nombre es obligatorio.
+    </div>
+  </div>
+
+  <!-- Apellidos -->
+  <div>
+    <label for="last_name" class="block font-medium mb-1">Apellidos:</label>
+    <input id="last_name" type="text" formControlName="last_name" class="w-full border rounded px-3 py-2" />
+    <div *ngIf="registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched" class="text-red-500">
+      Los apellidos son obligatorios.
+    </div>
+  </div>
+
+  <!-- Correo -->
+  <div>
+    <label for="email" class="block font-medium mb-1">Correo:</label>
+    <input id="email" type="email" formControlName="email" class="w-full border rounded px-3 py-2" />
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500">
+      Ingresa un correo válido.
+    </div>
+  </div>
+
+  <!-- Rol -->
+  <div>
+    <label for="role_id" class="block font-medium mb-1">Rol:</label>
+    <select id="role_id" formControlName="role_id" class="w-full border rounded px-3 py-2">
+      <option value="" disabled hidden>Selecciona un rol</option>
+      <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+    </select>
+    <div *ngIf="registerForm.get('role_id')?.invalid && registerForm.get('role_id')?.touched" class="text-red-500">
+      Debes seleccionar un rol.
+    </div>
+  </div>
+
+  <!-- Activo -->
+  <div class="flex items-center space-x-2">
+    <input type="checkbox" id="is_active" formControlName="is_active" />
+    <label for="is_active">Usuario activo</label>
+  </div>
+
+  <!-- Botón -->
+  <div class="text-right">
+    <button type="submit"
+            [disabled]="loading"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+      {{ loading ? 'Actualizando...' : 'Actualizar usuario' }}
+    </button>
+  </div>
+</form>
