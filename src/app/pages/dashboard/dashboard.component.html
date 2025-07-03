@@ -1,92 +1,75 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Panel de Asistencia</title>
-</head>
-
 <body class="bg-[#FAFAFA] text-[#0A0A0A]">
+    <!-- Botón de menú móvil -->
+    <button data-drawer-target="separator-sidebar" data-drawer-toggle="separator-sidebar"
+        aria-controls="separator-sidebar" type="button"
+        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+        </svg>
+    </button>
 
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white border-r hidden md:flex flex-col">
-            <div class="p-4 flex items-center gap-2 text-xl">
-                <i class="fas fa-microchip"></i> SmartEntry
+    <!-- Sidebar -->
+    <aside id="separator-sidebar"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        aria-label="Sidebar">
+        <div class="h-full px-3 py-0 overflow-y-auto bg-white border-r border-[#E8E8E8] flex flex-col justify-between">
+            <!-- Parte superior -->
+            <div class="space-y-2 font-medium">
+                <div class="py-6 px-4 flex items-center gap-2 text-xl">
+                    <img src="assets/images/48x48_original.png" alt="" class="w-8 h-8">
+                    <i class="fas fa-microchip"></i>
+                    <span>SmartEntry</span>
+                </div>
+
+                <a href="/teacher-assistance" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-clipboard-data text-xl"></i>
+                    <span class="ms-3">Panel de Asistencia</span>
+                </a>
+
+                <a href="/user-management" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-users text-xl"></i>
+                    <span class="ms-3">Gestión de Usuarios</span>
+                </a>
+
+                <a href="/academic-management" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-book text-xl"></i>
+                    <span class="ms-3">Gestión Académica</span>
+                </a>
+
+                <a href="/schedule" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-calendar text-xl"></i>
+                    <span class="ms-3">Horarios</span>
+                </a>
+
+                <a href="/workshop-blockade" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-lock-square-rounded text-xl"></i>
+                    <span class="ms-3">Bloqueo de Talleres</span>
+                </a>
             </div>
 
-            <nav class="p-4 space-y-2 text-sm flex-1 overflow-auto">
-                <a href="#" class="flex items-center gap-3 p-2 rounded">
-                    <i class="ti ti-clipboard-data text-xl"></i> Panel de Asistencia
-                </a>
-                <div class="space-y-1">
-                    <button type="button" class="flex items-center justify-between w-full p-2 rounded"
-                        data-dropdown-toggle="usuariosDropdown">
-                        <span class="flex items-center gap-2"><i class="ti ti-users text-xl"></i> Gestión de
-                            Usuarios</span>
-                        <i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <div id="usuariosDropdown" class="hidden pl-8 space-y-1">
-                        <a href="#" class="block py-1 hover:underline">Profesores</a>
-                        <a href="#" class="block py-1 hover:underline">Alumnos</a>
-                    </div>
-                </div>
-                <div class="space-y-1">
-                    <button type="button" class="flex items-center justify-between w-full p-2 rounded"
-                        data-dropdown-toggle="academicoDropdown">
-                        <span class="flex items-center gap-2"><i class="ti ti-book text-xl"></i> Gestión
-                            Académica</span>
-                        <i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <div id="academicoDropdown" class="hidden pl-8 space-y-1">
-                        <a href="#" class="block py-1 hover:underline">Materias</a>
-                        <a href="#" class="block py-1 hover:underline">Grupos</a>
-                    </div>
-                </div>
-                <a href="#" class="flex items-center gap-3 p-2 rounded">
-                    <i class="ti ti-calendar text-xl"></i> Horarios
-                </a>
-                <a href="#" class="flex items-center gap-3 p-2 rounded">
-                    <i class="ti ti-lock-square-rounded text-xl"></i> Bloqueo de Talleres
-                </a>
-            </nav>
-
-            <!-- Cerrar sesión abajo con línea superior -->
-            <div class="border-t p-1">
-                <a href="#" (click)="logout()" class="flex items-center gap-3 p-2 rounded">
-                    <i class="ti ti-logout-2 text-xl"></i> Cerrar Sesión
-                </a>
-            </div>
-
-        </aside>
-
-        <!-- Contenido -->
-        <div class="flex-1 flex flex-col h-screen overflow-hidden">
-            <!-- Navbar -->
-            <header class="bg-white border-b p-2 flex items-center justify-between flex-shrink-0">
-                <h1 class="text-lg font-medium">Panel de Asistencia</h1>
-                <input type="text" placeholder="00/00/0000" class="border rounded px-2 py-1 text-sm" />
-            </header>
-
-            <!-- Tabs -->
-            <div class="bg-white border-b px-4 py-2 flex space-x-6 flex-shrink-0">
-                <button class="flex items-center gap-2 text-sm hover:text-blue-600">
-                    <i class="ti ti-chalkboard-teacher text-xl"></i> Profesores
-                </button>
-                <button class="flex items-center gap-2 text-sm hover:text-blue-600">
-                    <i class="ti ti-school text-xl"></i> Alumnos
+            <!-- Cerrar sesión -->
+            <div class="border-t p-4">
+                <button (click)="logout()"
+                    class="w-full text-left flex items-center gap-3 rounded hover:text-[#525252]">
+                    <i class="ti ti-logout-2 text-xl"></i>
+                    <span>Cerrar Sesión</span>
                 </button>
             </div>
-
-            <!-- Contenido dinámico con scroll -->
-            <main class="flex-1 overflow-auto p-6 bg-[#FAFAFA]">
-                <router-outlet></router-outlet>
-            </main>
         </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="sm:ml-64 min-h-screen">
+        <router-outlet></router-outlet>
     </div>
 
-</body>
+    <!-- Footer fijo abajo a la derecha -->
+    <footer class="bg-white fixed bottom-0 w-full sm:left-64 sm:right-0 sm:w-auto text-xs px-4 py-2">
+        Powered by GIDI Systems
+    </footer>
 
-</html>
+</body>

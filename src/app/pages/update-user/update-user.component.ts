@@ -100,7 +100,7 @@ export class UpdateUserComponent implements OnInit {
 
         // Redirigir después de un pequeño delay opcional
         setTimeout(() => {
-          this.router.navigate(['/usermanagement']);
+          this.router.navigate(['/user-management']);
         }, 1500); // puedes ajustar el tiempo o quitarlo si no deseas esperar
       } else {
         this.errorMessages = Array.isArray(response.msg) ? response.msg : [response.msg];

@@ -5,22 +5,37 @@ import { UserManagementComponent } from './pages/user-management/user-management
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-auth.guard';  // importa el guard inverso
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
+import { WorkshopBlockadeComponent } from './pages/workshop-blockade/workshop-blockade.component';
+import { AcademicManagmentComponent } from './pages/academic-managment/academic-managment.component';
+import { SchedulesComponent } from './pages/schedules/schedules.component';
+import { StudentAssistancePanelComponent } from './pages/student-assistance-panel/student-assistance-panel.component';
+import { TeacherAssistancePanelComponent } from './pages/teacher-assistance-panel/teacher-assistance-panel.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [authGuard],  // protege dashboard y sus hijos
+    canActivate: [authGuard],
     children: [
-      { path: 'usermanagement', component: UserManagementComponent, canActivate: [authGuard] },
-      { path: 'usuarios/editar/:id', component: UpdateUserComponent }
-    ]
+      { path: 'student-assistance', component: StudentAssistancePanelComponent },
+      { path: 'teacher-assistance', component: TeacherAssistancePanelComponent },
+      { path: 'user-management', component: UserManagementComponent },
+      { path: 'academic-management', component: AcademicManagmentComponent },
+      { path: 'schedule', component: SchedulesComponent },
+      { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
+
+      { path: 'usuarios/editar/:id', component: UpdateUserComponent },
+      { path: '', redirectTo: 'usermanagement', pathMatch: 'full' },
+    ],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // redirigir por defecto a login
-  { path: '**', redirectTo: 'login' }, // ruta comodín
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [noAuthGuard]  // bloquea login si ya está autenticado
+    canActivate: [noAuthGuard]
+  },
+  // Ruta comodín general al final (redirige al login si no está autenticado)
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];

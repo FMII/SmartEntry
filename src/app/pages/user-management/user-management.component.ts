@@ -18,6 +18,8 @@ export class UserManagementComponent implements OnInit {
   errorMessages: string[] = [];
   successMessage = '';
   users: User[] = [];
+  modalVisible = false;
+
 
   // Para manejo de edición
   isEditMode = false;
@@ -162,6 +164,10 @@ export class UserManagementComponent implements OnInit {
             this.successMessage = Array.isArray(response.msg) ? response.msg.join(', ') : response.msg;
             this.loadUsers();
             this.registerForm.reset({ role_id: 3, is_active: true });
+            setTimeout(() => {
+    this.modalVisible = false;
+  }, 100);
+
           } else if (response.status === 'error') {
             this.errorMessages = Array.isArray(response.msg) ? response.msg : [response.msg];
           }
