@@ -10,6 +10,9 @@ import { AcademicManagmentComponent } from './pages/academic-managment/academic-
 import { SchedulesComponent } from './pages/schedules/schedules.component';
 import { StudentAssistancePanelComponent } from './pages/student-assistance-panel/student-assistance-panel.component';
 import { TeacherAssistancePanelComponent } from './pages/teacher-assistance-panel/teacher-assistance-panel.component';
+import { GroupManagementComponent } from './pages/group-management/group-management.component';
+import { CreateUserComponent } from './pages/create-user/create-user.component';
+import { UserGroupComponent } from './pages/user-group/user-group.component';
 
 export const routes: Routes = [
   {
@@ -20,11 +23,15 @@ export const routes: Routes = [
       { path: 'student-assistance', component: StudentAssistancePanelComponent },
       { path: 'teacher-assistance', component: TeacherAssistancePanelComponent },
       { path: 'user-management', component: UserManagementComponent },
+      { path: 'group-management', component: GroupManagementComponent },
+      { path: 'user-group', component: UserGroupComponent },
       { path: 'academic-management', component: AcademicManagmentComponent },
+      { path: 'group-management', component: GroupManagementComponent },
       { path: 'schedule', component: SchedulesComponent },
       { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
 
-      { path: 'usuarios/editar/:id', component: UpdateUserComponent },
+      { path: 'users/create', component: CreateUserComponent },
+      { path: 'users/edit/:id', component: UpdateUserComponent },
       { path: '', redirectTo: 'usermanagement', pathMatch: 'full' },
     ],
   },

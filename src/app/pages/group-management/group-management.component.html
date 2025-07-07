@@ -1,0 +1,73 @@
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-medium">Grupos</h1>
+</header>
+<div class="p-6">
+    <div class="bg-white w-full h-full rounded-2xl shadow flex flex-col">
+        <!-- Boton para buscar materia-->
+        <div class="p-4 flex justify-between items-center">
+            <select class="block w-auto min-w-[9rem] p-3 text-sm border border-[#E8E8E8] rounded-lg" name="grado">
+                <option selected disabled>Grado</option>
+                <option value="1">Primaria</option>
+                <option value="2">Secundaria</option>
+                <option value="3">Preparatoria</option>
+            </select>
+
+            <button class="bg-[#262626] text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-black transition">
+                Agregar Grupo
+            </button>
+        </div>
+
+        <!-- Línea debajo -->
+        <div class="w-full border-b" style="border-color: #E8E8E8;"></div>
+        <!-- TABLA -->
+        <div class="w-full p-6">
+            <div class="mt-4 relative shadow-md sm:rounded-lg rounded-lg">
+                <!-- Contenedor con scroll propio -->
+                <div class="overflow-y-auto max-h-[400px]">
+                    <table class="w-full text-sm text-left rtl:text-right text-[#0A0A0A]">
+                        <thead class="text-xs uppercase bg-gray-50 sticky top-0 z-10">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">ID</th>
+                                <th scope="col" class="px-6 py-3">Grupo</th>
+                                <th scope="col" class="px-6 py-3">Grado</th>
+                                <th scope="col" class="px-6 py-3">Actualizar</th>
+                                <th scope="col" class="px-6 py-3">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b border-gray-200">
+                                <td class="px-6 py-4">1</td>
+                                <td class="px-6 py-4">6-A</td>
+                                <td class="px-6 py-4">
+                                    <select
+                                        class="block w-full min-w-[9rem] px-2 py-2 text-sm border border-[#E8E8E8] rounded-lg"
+                                        name="profesor">
+                                        <option selected disabled>Grado</option>
+                                        <option value="1">Primaria</option>
+                                        <option value="2">Secundaria</option>
+                                        <option value="3">Preparatoria</option>
+                                    </select>
+                                </td>
+                                <td class="px-6 py-4 text-start">
+                                    <a href="#"
+                                        class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-black transition">
+                                        <i class="ti ti-edit text-xl"></i>
+                                        Editar
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 text-start">
+                                    <a href="#"
+                                        class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-black transition">
+                                        <i class="ti ti-trash text-xl"></i>
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

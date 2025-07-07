@@ -24,22 +24,42 @@
                     <i class="fas fa-microchip"></i>
                     <span>SmartEntry</span>
                 </div>
-
+                <!--
                 <a href="/teacher-assistance" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
                     <i class="ti ti-clipboard-data text-xl"></i>
                     <span class="ms-3">Panel de Asistencia</span>
                 </a>
+                -->
 
                 <a href="/user-management" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
                     <i class="ti ti-users text-xl"></i>
                     <span class="ms-3">Gestión de Usuarios</span>
                 </a>
 
-                <a href="/academic-management" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
-                    <i class="ti ti-book text-xl"></i>
-                    <span class="ms-3">Gestión Académica</span>
-                </a>
+                <!-- Gestión Académica con submenú desplegable -->
+                <div class="relative">
+                    <!-- Botón que activa el submenú -->
+                    <input type="checkbox" id="academic-menu" class="peer hidden">
+                    <label for="academic-menu"
+                        class="flex items-center w-full p-2 rounded-lg cursor-pointer hover:text-[#525252]">
+                        <i class="ti ti-book text-xl"></i>
+                        <span class="ms-3 flex-1 text-left">Gestión Académica</span>
+                        <svg class="w-4 h-4 transition-transform duration-200 peer-checked:rotate-180" fill="none"
+                            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </label>
 
+                    <!-- Submenú desplegable -->
+                    <div class="hidden peer-checked:block pl-10 mt-1 space-y-1 text-sm">
+                        <!--
+                        <a href="/academic-management"class="block px-2 py-1 rounded-lg hover:text-[#525252]">Materias</a>
+                        -->
+                        <a href="/group-management" class="block px-2 py-1 rounded-lg hover:text-[#525252]">Grupos</a>
+                        <a href="/user-group" class="block px-2 py-1 rounded-lg hover:text-[#525252]">Asignación de Grupos</a>
+                    </div>
+                </div>
+                <!--
                 <a href="/schedule" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
                     <i class="ti ti-calendar text-xl"></i>
                     <span class="ms-3">Horarios</span>
@@ -49,6 +69,7 @@
                     <i class="ti ti-lock-square-rounded text-xl"></i>
                     <span class="ms-3">Bloqueo de Talleres</span>
                 </a>
+                -->
             </div>
 
             <!-- Cerrar sesión -->
