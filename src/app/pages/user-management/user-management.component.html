@@ -5,25 +5,26 @@
 <div class="p-6">
     <div class="bg-white w-full h-full rounded-2xl shadow p-6 flex flex-col">
         <!-- Encabezado: búsqueda + botón -->
-        <div class="flex items-center justify-end gap-4 mb-4">
-            <!-- Buscador -->
-            <div class="flex items-center max-w-sm">
+        <div class="flex items-center gap-4 mb-4">
+            <!-- Buscador que ocupa todo el ancho disponible -->
+            <div class="flex items-center flex-1">
                 <label for="search" class="sr-only">Buscar</label>
                 <div class="relative w-full">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <i class="ti ti-search text-lg"></i>
+                        <i class="ti ti-search text-lg text-"></i>
                     </div>
                     <input type="text" id="search"
                         class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
-                        placeholder="Buscar..." />
+                        placeholder="Buscar" />
                 </div>
             </div>
-
-            <!-- Botón agregar (puedes cambiar routerLink según la ruta de tu componente de creación) -->
-            <a [routerLink]="['/users/create']"
-                class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
-                Agregar usuario
-            </a>
+            <!-- Agregar Usuario -->
+            <div>
+                <a [routerLink]="['/users/create']"
+                    class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
+                    Agregar Usuario
+                </a>
+            </div>
         </div>
 
         <!-- Línea debajo -->

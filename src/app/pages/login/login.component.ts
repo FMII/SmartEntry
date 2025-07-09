@@ -32,6 +32,10 @@ export class LoginComponent {
       next: () => this.router.navigate(['user-management']),
       error: (err) => {
         this.errorMessage = err.message || 'Error en login';
+
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
       },
     });
   }

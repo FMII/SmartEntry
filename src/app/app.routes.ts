@@ -13,6 +13,7 @@ import { TeacherAssistancePanelComponent } from './pages/teacher-assistance-pane
 import { GroupManagementComponent } from './pages/group-management/group-management.component';
 import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { UserGroupComponent } from './pages/user-group/user-group.component';
+import { CreateGroupComponent } from './pages/create-group/create-group.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
 
       { path: 'users/create', component: CreateUserComponent },
+      { path: 'groups/create', component: CreateGroupComponent },
       { path: 'users/edit/:id', component: UpdateUserComponent },
       { path: '', redirectTo: 'usermanagement', pathMatch: 'full' },
     ],

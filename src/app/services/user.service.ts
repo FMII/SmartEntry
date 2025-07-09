@@ -81,6 +81,4 @@ export class UserRegisterService {
 
     return this.http.get<ApiResponse>(`http://localhost:3000/api/update/${id}`, { headers });
   }
-
-
 }
