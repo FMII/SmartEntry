@@ -17,6 +17,7 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
+
   createGroup(group: Group): Observable<any> {
     return this.http.post(this.apiUrl, group);
   }
@@ -24,4 +25,12 @@ export class GroupService {
   getGroups(): Observable<any> {
     return this.http.get(this.listUrl);
   }
+
+  getGroupById(id: number): Observable<any> {
+    return this.http.get(`http://localhost:3000/api/groups/${id}`);
+  }
+  updateGroup(id: number, group: Group): Observable<any> {
+  return this.http.put(`http://localhost:3000/api/groups/${id}`, group);
+}
+
 }

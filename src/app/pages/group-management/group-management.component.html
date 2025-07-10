@@ -47,11 +47,12 @@
                                     }}
                                 </td>
                                 <td class="px-6 py-4 text-start">
-                                    <a href="#"
+                                    <a [routerLink]="['/groups/edit', group.id]"
                                         class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-black transition">
                                         <i class="ti ti-edit text-xl"></i>
                                         Editar
                                     </a>
+
                                 </td>
                             </tr>
                             <tr *ngIf="groups.length === 0">

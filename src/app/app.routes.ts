@@ -14,6 +14,7 @@ import { GroupManagementComponent } from './pages/group-management/group-managem
 import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { UserGroupComponent } from './pages/user-group/user-group.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
+import { UpdateGroupComponent } from './pages/update-group/update-group.component';
 
 export const routes: Routes = [
   {
@@ -30,7 +31,8 @@ export const routes: Routes = [
       { path: 'group-management', component: GroupManagementComponent },
       { path: 'schedule', component: SchedulesComponent },
       { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
-
+      {
+        path: 'groups/edit/:id', component: UpdateGroupComponent },
       { path: 'users/create', component: CreateUserComponent },
       { path: 'groups/create', component: CreateGroupComponent },
       { path: 'users/edit/:id', component: UpdateUserComponent },
