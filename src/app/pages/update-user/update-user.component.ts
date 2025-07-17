@@ -77,44 +77,44 @@ export class UpdateUserComponent implements OnInit {
   }
 
   onSubmit() {
-  this.errorMessages = [];
-  this.successMessage = '';
+    this.errorMessages = [];
+    this.successMessage = '';
 
-  if (this.registerForm.invalid) {
-    this.errorMessages.push('Por favor completa todos los campos correctamente.');
-    return;
-  }
-
-  this.loading = true;
-
-  const formValue = {
-    ...this.registerForm.value,
-    role_id: Number(this.registerForm.value.role_id)
-  };
-
-  this.userService.updateUser(this.userId, formValue).subscribe({
-    next: (response) => {
-      this.loading = false;
-      if (response.status === 'success') {
-        this.successMessage = Array.isArray(response.msg) ? response.msg.join(', ') : response.msg;
-
-        // Redirigir después de un pequeño delay opcional
-        setTimeout(() => {
-          this.router.navigate(['/user-management']);
-        }, 1500);
-      } else {
-        this.errorMessages = Array.isArray(response.msg) ? response.msg : [response.msg];
-      }
-    },
-    error: (err) => {
-      this.loading = false;
-      if (err.error?.msg) {
-        this.errorMessages = Array.isArray(err.error.msg) ? err.error.msg : [err.error.msg];
-      } else {
-        this.errorMessages = ['Error del servidor, intenta más tarde.'];
-      }
+    if (this.registerForm.invalid) {
+      this.errorMessages.push('Por favor completa todos los campos correctamente.');
+      return;
     }
-  });
-}
+
+    this.loading = true;
+
+    const formValue = {
+      ...this.registerForm.value,
+      role_id: Number(this.registerForm.value.role_id)
+    };
+
+    this.userService.updateUser(this.userId, formValue).subscribe({
+      next: (response) => {
+        this.loading = false;
+        if (response.status === 'success') {
+          this.successMessage = Array.isArray(response.msg) ? response.msg.join(', ') : response.msg;
+
+          // Redirigir
+          setTimeout(() => {
+            this.router.navigate(['/user-management']);
+          }, 1500);
+        } else {
+          this.errorMessages = Array.isArray(response.msg) ? response.msg : [response.msg];
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        if (err.error?.msg) {
+          this.errorMessages = Array.isArray(err.error.msg) ? err.error.msg : [err.error.msg];
+        } else {
+          this.errorMessages = ['Error del servidor, intenta más tarde.'];
+        }
+      }
+    });
+  }
 
 }

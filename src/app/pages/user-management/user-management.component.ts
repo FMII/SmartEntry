@@ -165,8 +165,8 @@ export class UserManagementComponent implements OnInit {
             this.loadUsers();
             this.registerForm.reset({ role_id: 3, is_active: true });
             setTimeout(() => {
-    this.modalVisible = false;
-  }, 100);
+              this.modalVisible = false;
+            }, 100);
 
           } else if (response.status === 'error') {
             this.errorMessages = Array.isArray(response.msg) ? response.msg : [response.msg];

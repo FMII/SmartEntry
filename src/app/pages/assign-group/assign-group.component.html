@@ -1,0 +1,70 @@
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+  <h1 class="text-lg font-medium">Asignar Grupo al Estudiante</h1>
+</header>
+
+<div class="p-6">
+  <div class="bg-white w-full h-full rounded-2xl shadow flex flex-col p-4">
+
+    <!-- Toast de error -->
+    <div *ngIf="errorMessages.length > 0"
+      class="fixed top-6 right-6 bg-red-50 border border-[#DC3545] text-[#DC3545] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+      <div class="flex items-start gap-3 p-4">
+        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+          <i class="ti ti-x text-2xl text-red-600"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-semibold">Error</p>
+          <ul class="text-sm list-disc ps-4">
+            <li *ngFor="let err of errorMessages">{{ err }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de éxito -->
+    <div *ngIf="successMessage"
+      class="fixed top-6 right-6 bg-green-50 border border-[#28A745] text-[#28A745] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+      <div class="flex items-start gap-3 p-4">
+        <div class="flex-shrink-0 bg-green-100 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <p class="font-semibold">Éxito</p>
+          <p class="text-sm">{{ successMessage }}</p>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="assignForm" (ngSubmit)="onSubmit()" class="max-w-xl mx-auto p-10 space-y-6">
+
+      <div class="text-xl font-semibold">Formulario de Asignación</div>
+
+      <!-- Selector de grupo -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Grupo</label>
+        <select formControlName="group_id" class="w-full p-2 border rounded-lg">
+          <option value="" disabled selected hidden>Selecciona un grupo</option>
+          <option *ngFor="let group of groups" [ngValue]="group.id">{{ group.name }}</option>
+        </select>
+      </div>
+
+      <!-- Año académico -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Año Académico</label>
+        <input type="number" formControlName="academic_year" placeholder="Ej. 2025"
+          class="w-full p-2 border rounded-lg" />
+      </div>
+
+      <!-- Botón -->
+      <div class="text-right">
+        <button type="submit" [disabled]="loading || assignForm.invalid"
+          class="bg-[#262626] text-white px-6 py-2 rounded-lg font-medium hover:bg-black transition">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

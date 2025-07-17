@@ -30,7 +30,16 @@ export class GroupService {
     return this.http.get(`http://localhost:3000/api/groups/${id}`);
   }
   updateGroup(id: number, group: Group): Observable<any> {
-  return this.http.put(`http://localhost:3000/api/groups/${id}`, group);
-}
+    return this.http.put(`http://localhost:3000/api/groups/${id}`, group);
+  }
+  getUsersByRole(): Observable<any> {
+    return this.http.get('http://localhost:3000/api/users/roles/3');
+  }
+  assignGroupToStudent(payload: { student_id: number; group_id: number; academic_year: number }): Observable<any> {
+    return this.http.post('http://localhost:3000/api/student-groups/assign', payload);
+  }
+  getStudentsByGroup(groupId: number): Observable<any> {
+    return this.http.get(`http://localhost:3000/api/student-groups/${groupId}/students`);
+  }
 
 }
