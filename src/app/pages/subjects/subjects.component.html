@@ -18,11 +18,11 @@
                         placeholder="Buscar" />
                 </div>
             </div>
-            <!-- Agregar Usuario -->
+            <!-- Agregar Materia -->
             <div>
-                <a href="#"
+                <a href="/subjects/create"
                     class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
-                    Agregar Usuario
+                    Agregar Materia
                 </a>
             </div>
         </div>
@@ -44,16 +44,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <td class="px-6 py-4">1</td>
-                        <td class="px-6 py-4">Matemáticas</td>
-                        <td class="px-6 py-4">MATH-01</td>
-                        <td class="px-6 py-4">
-                            <a href="#"
-                                class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black transition">
-                                <i class="ti ti-edit text-base"></i>
-                                Editar
-                            </a>
-                        </td>
+                        <tr *ngFor="let subject of subjects">
+                            <td class="px-6 py-4">{{ subject.id }}</td>
+                            <td class="px-6 py-4">{{ subject.name }}</td>
+                            <td class="px-6 py-4">{{ subject.code }}</td>
+                            <td class="px-6 py-4">
+                                <a href="/subjects/edit/{{ subject.id }}"
+                                    class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black transition">
+                                    <i class="ti ti-edit text-base"></i>
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

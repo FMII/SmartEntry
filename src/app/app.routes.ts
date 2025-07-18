@@ -18,6 +18,8 @@ import { UpdateGroupComponent } from './pages/update-group/update-group.componen
 import { StudentsComponent } from './pages/students/students.component';
 import { AssignGroupComponent } from './pages/assign-group/assign-group.component';
 import { SubjectsComponent } from './pages/subjects/subjects.component';
+import { CreateSubjectComponent } from './pages/create-subjects/create-subjects.component';
+import { UpdateSubjectsComponent } from './pages/update-subjects/update-subjects.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +39,8 @@ export const routes: Routes = [
       { path: 'students', component: StudentsComponent },
       { path: 'subjects', component: SubjectsComponent },
 
+      { path: 'subjects/edit/:id', component: UpdateSubjectsComponent },
+      { path: 'subjects/create', component: CreateSubjectComponent },
       { path: 'groups/assign/:id', component: AssignGroupComponent },
       { path: 'groups/edit/:id', component: UpdateGroupComponent },
       { path: 'users/create', component: CreateUserComponent },
