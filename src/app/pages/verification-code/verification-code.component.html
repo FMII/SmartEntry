@@ -1,0 +1,24 @@
+<div class="min-h-screen flex items-center justify-center bg-white px-4">
+  <form [formGroup]="codeForm" (ngSubmit)="onSubmit()" class="bg-white border border-[#E8E8E8] shadow-md rounded-2xl px-8 py-12 max-w-md w-full">
+    <h1 class="text-2xl text-center mb-2">Código de Verificación</h1>
+    <p class="text-xs text-center text-gray-500 mb-6">
+      Ingresa el código de verificación enviado a tu correo electrónico.
+    </p>
+    <div class="mb-6">
+      <label for="code" class="block text-xs font-medium mb-4">Código</label>
+      <input type="text" id="code" formControlName="code" maxlength="6" placeholder="Ingresa el código de verificación"
+        class="text-xs w-full px-4 py-3 bg-[#FAFAFA] rounded-full focus:outline-none focus:ring-1 focus:ring-black" />
+      <div *ngIf="codeForm.controls['code'].invalid && codeForm.controls['code'].touched" class="text-red-500 text-xs mt-1">
+        El código debe tener 6 dígitos.
+      </div>
+    </div>
+    <div *ngIf="errorMessage" class="text-red-600 text-xs mb-4 text-center">
+      {{ errorMessage }}
+    </div>
+    <button type="submit"
+      class="w-full bg-[#262626] text-xs text-white py-3 rounded-full hover:bg-black transition-colors duration-300 disabled:opacity-50"
+      [disabled]="codeForm.invalid">
+      Enviar
+    </button>
+  </form>
+</div>

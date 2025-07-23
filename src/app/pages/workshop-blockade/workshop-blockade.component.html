@@ -1,1 +1,56 @@
-<p>workshop-blockade works!</p>
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-medium">Bloqueo de Salones</h1>
+</header>
+
+<div class="p-6">
+    <div class="bg-white w-full h-full rounded-2xl shadow p-6 flex flex-col">
+        <!-- Encabezado: búsqueda + botón -->
+        <div class="flex items-center gap-4 mb-4">
+            <!-- Buscador que ocupa todo el ancho disponible -->
+            <div class="flex items-center flex-1">
+                <label for="search" class="sr-only">Buscar</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="ti ti-search text-lg text-"></i>
+                    </div>
+                    <input type="text" id="search"
+                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
+                        placeholder="Buscar" />
+                </div>
+            </div>
+            <!-- Agregar Usuario -->
+            <div>
+                <a href="#"
+                    class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
+                    Agregar Salón
+                </a>
+            </div>
+        </div>
+
+        <!-- Línea debajo -->
+        <div class="w-full border-b" style="border-color: #E8E8E8;"></div>
+
+        <!-- Tabla con scroll -->
+        <div class="">
+            <div class="overflow-y-auto max-h-[475px] rounded-lg p-6">
+                <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                    <div class="mx-3 mb-0 border-b border-slate-200 pt-3 pb-2 px-1">
+                        <span class="text-sm text-slate-600 font-medium">
+                            Header for the card
+                        </span>
+                    </div>
+
+                    <div class="p-4">
+                        <h5 class="mb-2 text-slate-800 text-xl font-semibold">
+                            Website Review Check Update from Our Team in San Francisco
+                        </h5>
+                        <p class="text-slate-600 leading-normal font-light">
+                            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to Naviglio
+                            where you can enjoy the main night life in Barcelona.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,13 +29,16 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     this.auth.login(email!, password!).subscribe({
-      next: () => this.router.navigate(['user-management']),
+      next: () => {
+        localStorage.setItem('pendingEmail', email!);
+        this.router.navigate(['verification-code']);
+      },
       error: (err) => {
         this.errorMessage = err.message || 'Error en login';
 
         setTimeout(() => {
           this.errorMessage = '';
-        }, 3000);
+        }, 1000);
       },
     });
   }

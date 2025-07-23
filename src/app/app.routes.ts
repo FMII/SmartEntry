@@ -20,6 +20,10 @@ import { AssignGroupComponent } from './pages/assign-group/assign-group.componen
 import { SubjectsComponent } from './pages/subjects/subjects.component';
 import { CreateSubjectComponent } from './pages/create-subjects/create-subjects.component';
 import { UpdateSubjectsComponent } from './pages/update-subjects/update-subjects.component';
+import { VerificationCodeComponent } from './pages/verification-code/verification-code.component';
+import { pendingVerificationGuard } from './guards/pending-verification.guard';
+
+// Otras importaciones que tengas...
 
 export const routes: Routes = [
   {
@@ -54,7 +58,11 @@ export const routes: Routes = [
     component: LoginComponent,
     canActivate: [noAuthGuard]
   },
-  // Ruta comodín general al final (redirige al login si no está autenticado)
+  {
+    path: 'verification-code',
+    component: VerificationCodeComponent,
+    canActivate: [pendingVerificationGuard]
+  },
   {
     path: '**',
     redirectTo: 'login'
