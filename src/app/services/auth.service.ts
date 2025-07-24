@@ -61,16 +61,20 @@ export class AuthService {
     localStorage.clear();
   }
 
-  // Método para manejar errores
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'Ocurrió un error inesperado.';
 
     if (error.error instanceof ErrorEvent) {
-      // Error del lado del cliente
       errorMsg = `Error: ${error.error.message}`;
     } else {
-      // Error del lado del servidor
-      errorMsg = error.error?.msg?.[0] || error.error?.msg || `Código de error: ${error.status}`;
+      const msg = error.error?.msg;
+      if (Array.isArray(msg)) {
+        errorMsg = msg[0];
+      } else if (typeof msg === 'string') {
+        errorMsg = msg;
+      } else {
+        errorMsg = `Código de error: ${error.status}`;
+      }
     }
 
     return throwError(() => new Error(errorMsg));
