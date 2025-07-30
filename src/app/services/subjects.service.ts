@@ -13,7 +13,7 @@ export interface Subject {
   providedIn: 'root'
 })
 export class SubjectsService {
-  private apiUrl = 'http://localhost:3000/api/subjects';
+  private apiUrl = 'http://localhost:3000/api/academic/subjects';
 
   constructor(private http: HttpClient) { }
 

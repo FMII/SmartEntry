@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/login';
+  private apiUrl = 'http://localhost:3000/api/academic/login';
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   verifyCode(email: string, code: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/users/verify', {
+    return this.http.post<any>('http://localhost:3000/api/academic/users/verify', {
       email,
       code
     }).pipe(

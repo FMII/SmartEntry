@@ -22,6 +22,8 @@ import { CreateSubjectComponent } from './pages/create-subjects/create-subjects.
 import { UpdateSubjectsComponent } from './pages/update-subjects/update-subjects.component';
 import { VerificationCodeComponent } from './pages/verification-code/verification-code.component';
 import { pendingVerificationGuard } from './guards/pending-verification.guard';
+import { CreateClassroomComponent } from './pages/create-classroom/create-classroom.component';
+import { RfidCardsComponent } from './pages/rfid-cards/rfid-cards.component';
 
 // Otras importaciones que tengas...
 
@@ -42,7 +44,10 @@ export const routes: Routes = [
       { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
       { path: 'students', component: StudentsComponent },
       { path: 'subjects', component: SubjectsComponent },
+      { path: 'rfid-cards', component: RfidCardsComponent },
+      
 
+      { path: 'classrooms/create', component: CreateClassroomComponent },
       { path: 'subjects/edit/:id', component: UpdateSubjectsComponent },
       { path: 'subjects/create', component: CreateSubjectComponent },
       { path: 'groups/assign/:id', component: AssignGroupComponent },

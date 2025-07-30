@@ -32,8 +32,8 @@ export interface UsersResponse {
 })
 export class UserRegisterService {
 
-  private apiUrl = 'http://localhost:3000/api/register';
-  private usersUrl = 'http://localhost:3000/api/users';
+  private apiUrl = 'http://localhost:3000/api/academic/register';
+  private usersUrl = 'http://localhost:3000/api/academic/users';
 
   constructor(private http: HttpClient) { }
 
@@ -70,7 +70,7 @@ export class UserRegisterService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<ApiResponse>(`http://localhost:3000/api/update/${id}`, updatedData, { headers });
+    return this.http.put<ApiResponse>(`http://localhost:3000/api/academic/update/${id}`, updatedData, { headers });
   }
 
   getUserById(id: number): Observable<ApiResponse> {
@@ -79,6 +79,6 @@ export class UserRegisterService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<ApiResponse>(`http://localhost:3000/api/update/${id}`, { headers });
+    return this.http.get<ApiResponse>(`http://localhost:3000/api/academic/update/${id}`, { headers });
   }
 }
