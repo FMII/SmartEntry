@@ -17,4 +17,9 @@ export class RfidCardsService {
   createRfid(data: { uid: string; user_id: number }): Observable<any> {
     return this.http.post(`${this.baseUrl}/create`, data);
   }
+
+  updateRfid(id: number, data: { uid: string; user_id: number }): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}`, data);
+  }
+
 }
