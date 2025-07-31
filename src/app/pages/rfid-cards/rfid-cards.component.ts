@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { RfidCardsService } from '../../services/rfid-cards.service';
 import { UserRegisterService, User } from '../../services/user.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-rfid-cards',
@@ -13,12 +12,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   templateUrl: './rfid-cards.component.html',
   styleUrl: './rfid-cards.component.css'
 })
-
 export class RfidCardsComponent implements OnInit {
-
-  rfids: any[] = []; // Aquí almacenamos los datos RFID con nombre de usuario
+  rfids: any[] = [];
   users: User[] = [];
   activeDropdownId: number | null = null;
+
+  showModal = false;
+  rfidToDeleteId: number | null = null;
+  showSuccessToast = false;
+  successMessage = '';
 
   constructor(
     private rfidService: RfidCardsService,
@@ -37,8 +39,6 @@ export class RfidCardsComponent implements OnInit {
         this.rfidService.getAllRfids().subscribe({
           next: (rfidResponse) => {
             const rfid = rfidResponse.data;
-
-            // Si la API devuelve un solo objeto, lo convertimos en arreglo para iterarlo
             const rfidsArray = Array.isArray(rfid) ? rfid : [rfid];
 
             this.rfids = rfidsArray.map((item: any) => {
@@ -53,10 +53,43 @@ export class RfidCardsComponent implements OnInit {
       }
     });
   }
+
   toggleDropdown(id: number): void {
     this.activeDropdownId = this.activeDropdownId === id ? null : id;
   }
+
   closeDropdown(): void {
     this.activeDropdownId = null;
+  }
+
+  openDeleteModal(id: number) {
+    this.rfidToDeleteId = id;
+    this.showModal = true;
+  }
+
+  cancelDelete() {
+    this.rfidToDeleteId = null;
+    this.showModal = false;
+  }
+
+  confirmDelete() {
+    if (this.rfidToDeleteId !== null) {
+      this.rfidService.deleteRfidCard(this.rfidToDeleteId).subscribe({
+        next: (response: any) => {
+          this.loadData();
+          this.cancelDelete();
+          this.successMessage = response.msg?.[0] || 'Operación exitosa';
+          this.showSuccessToast = true;
+          setTimeout(() => {
+            this.showSuccessToast = false;
+            this.successMessage = '';
+          }, 3000);
+        },
+        error: (err) => {
+          console.error('Error al eliminar', err);
+          this.cancelDelete();
+        }
+      });
+    }
   }
 }

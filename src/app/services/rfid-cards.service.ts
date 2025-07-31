@@ -22,4 +22,7 @@ export class RfidCardsService {
     return this.http.put<any>(`${this.baseUrl}/${id}`, data);
   }
 
+  deleteRfidCard(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

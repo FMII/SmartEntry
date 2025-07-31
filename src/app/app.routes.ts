@@ -26,6 +26,7 @@ import { CreateClassroomComponent } from './pages/create-classroom/create-classr
 import { RfidCardsComponent } from './pages/rfid-cards/rfid-cards.component';
 import { CreateRfidCardComponent } from './pages/create-rfid-cards/create-rfid-cards.component';
 import { UpdateRfidCardsComponent } from './pages/update-rfid-cards/update-rfid-cards.component';
+import { SensorsComponent } from './pages/sensors/sensors.component';
 
 // Otras importaciones que tengas...
 
@@ -47,6 +48,7 @@ export const routes: Routes = [
       { path: 'students', component: StudentsComponent },
       { path: 'subjects', component: SubjectsComponent },
       { path: 'rfid-cards', component: RfidCardsComponent },
+      { path: 'sensors', component: SensorsComponent },
 
       { path: 'rfid-card/edit/:id', component: UpdateRfidCardsComponent },
       { path: 'rfid-card/create', component: CreateRfidCardComponent },
