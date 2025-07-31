@@ -1,1 +1,86 @@
-<p>rfid-cards works!</p>
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-medium">Gestión de Tarjetas RFID</h1>
+</header>
+
+<div class="p-6">
+    <div class="bg-white w-full h-full rounded-2xl shadow p-6 flex flex-col">
+        <!-- Encabezado: búsqueda + botón -->
+        <div class="flex items-center gap-4 mb-4">
+            <!-- Buscador que ocupa todo el ancho disponible -->
+            <div class="flex items-center flex-1">
+                <label for="search" class="sr-only">Buscar</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="ti ti-search text-lg text-"></i>
+                    </div>
+                    <input type="text" id="search"
+                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
+                        placeholder="Buscar" />
+                </div>
+            </div>
+            <!-- Agregar Usuario -->
+            <div>
+                <a [routerLink]="['/rfid-card/create']"
+                    class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
+                    Agrega una tarjeta RFID
+                </a>
+            </div>
+        </div>
+
+        <!-- Línea debajo -->
+        <div class="w-full border-b mb-4" style="border-color: #E8E8E8;"></div>
+
+        <!-- Tabla con scroll -->
+        <!-- Contenedor de cards -->
+        <div class="overflow-y-auto max-h-[475px] rounded-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div *ngFor="let rfid of rfids" class="relative">
+                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <div class="mb-4 flex justify-between items-center">
+                            <span class="bg-black text-white text-xs px-4 py-1 rounded-xl">RFID</span>
+
+                            <!-- Botón que activa el dropdown -->
+                            <button (click)="toggleDropdown(rfid.id)"
+                                class="px-4 py-1 border border-[#E8E8E8] rounded-xl flex items-center justify-center text-black"
+                                type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon icon-tabler icon-tabler-dots">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <a href="#">
+                            <p class="mb-2 text-mb font-semibold tracking-tight text-gray-900">{{ rfid.userFullName }}
+                            </p>
+                        </a>
+                        <p class="mb-3 text-xs text-gray-500">{{ rfid.uid }}</p>
+                    </div>
+
+                    <!-- Dropdown (relativo a la tarjeta) -->
+                    <div *ngIf="activeDropdownId === rfid.id" #dropdownMenu
+                        class="absolute right-4 top-14 z-10 bg-white divide-y divide-gray-100 rounded-xl shadow-sm w-44 border border-[#E8E8E8]">
+                        <ul class="py-2 text-sm text-gray-700">
+                            <li>
+                                <!-- Enlace a edición con el ID del RFID -->
+                                <a [routerLink]="['/rfid-card/edit', rfid.id]"
+                                    class="block px-4 py-2 hover:text-[#FFC107]">
+                                    Editar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:text-[#DC3545]">Eliminar</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-classroom',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgFor, NgClass],
+  imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './create-classroom.component.html',
   styleUrl: './create-classroom.component.css',
 })

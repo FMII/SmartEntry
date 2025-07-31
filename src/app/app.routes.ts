@@ -24,6 +24,8 @@ import { VerificationCodeComponent } from './pages/verification-code/verificatio
 import { pendingVerificationGuard } from './guards/pending-verification.guard';
 import { CreateClassroomComponent } from './pages/create-classroom/create-classroom.component';
 import { RfidCardsComponent } from './pages/rfid-cards/rfid-cards.component';
+import { CreateRfidCardComponent } from './pages/create-rfid-cards/create-rfid-cards.component';
+import { UpdateRfidCardsComponent } from './pages/update-rfid-cards/update-rfid-cards.component';
 
 // Otras importaciones que tengas...
 
@@ -45,8 +47,9 @@ export const routes: Routes = [
       { path: 'students', component: StudentsComponent },
       { path: 'subjects', component: SubjectsComponent },
       { path: 'rfid-cards', component: RfidCardsComponent },
-      
 
+      { path: 'rfid-card/edit/:id', component: UpdateRfidCardsComponent },
+      { path: 'rfid-card/create', component: CreateRfidCardComponent },
       { path: 'classrooms/create', component: CreateClassroomComponent },
       { path: 'subjects/edit/:id', component: UpdateSubjectsComponent },
       { path: 'subjects/create', component: CreateSubjectComponent },
