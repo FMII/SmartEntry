@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ClassroomResponse } from '../interfaces/classroom';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,11 @@ export class ClassroomsService {
   // Obtener todos los salones
   getClassrooms(): Observable<any> {
     return this.http.get(this.baseUrl);
+  }
+
+  //Obtener todos los salones, usando la interfaz
+  getAllClassrooms(): Observable<ClassroomResponse> {
+    return this.http.get<ClassroomResponse>(this.baseUrl);
   }
 
   // Crear aula

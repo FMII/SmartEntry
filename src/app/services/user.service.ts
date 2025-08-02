@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TeacherResponse } from '../interfaces/teacher';
 
 interface ApiResponse {
   status: string;
@@ -34,6 +35,7 @@ export class UserRegisterService {
 
   private apiUrl = 'http://localhost:3000/api/academic/register';
   private usersUrl = 'http://localhost:3000/api/academic/users';
+  private teachersUrl = 'http://localhost:3000/api/academic/users/roles/4';
 
   constructor(private http: HttpClient) { }
 
@@ -80,5 +82,9 @@ export class UserRegisterService {
     });
 
     return this.http.get<ApiResponse>(`http://localhost:3000/api/academic/update/${id}`, { headers });
+  }
+
+  getTeachers(): Observable<TeacherResponse> {
+    return this.http.get<TeacherResponse>(this.teachersUrl);
   }
 }

@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiResponse, Groups } from '../interfaces/groups';
 
 interface Group {
   name: string;
@@ -25,6 +26,11 @@ export class GroupService {
   getGroups(): Observable<any> {
     return this.http.get(this.listUrl);
   }
+  
+  getAllGroups(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.listUrl);
+  }
+
 
   getGroupById(id: number): Observable<any> {
     return this.http.get(`http://localhost:3000/api/academic/groups/${id}`);

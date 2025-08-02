@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { SubjectsResponse } from '../interfaces/subject';
 
 export interface Subject {
   id: number;
@@ -29,6 +30,10 @@ export class SubjectsService {
     return this.http.get<{ status: string; data: Subject[] }>(this.apiUrl).pipe(
       catchError(this.handleError)
     );
+  }
+  //Obtener materias, uso de interfaz
+  getSubjects(): Observable<SubjectsResponse> {
+    return this.http.get<SubjectsResponse>(this.apiUrl);
   }
 
   // Actualizar materia

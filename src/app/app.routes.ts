@@ -47,7 +47,7 @@ export const routes: Routes = [
       { path: 'user-group', component: UserGroupComponent },
       { path: 'academic-management', component: AcademicManagmentComponent },
       { path: 'group-management', component: GroupManagementComponent },
-      { path: 'schedule', component: SchedulesComponent },
+      { path: 'schedules', component: SchedulesComponent },
       { path: 'workshop-blockade', component: WorkshopBlockadeComponent },
       { path: 'students', component: StudentsComponent },
       { path: 'subjects', component: SubjectsComponent },
