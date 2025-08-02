@@ -29,6 +29,8 @@ import { UpdateRfidCardsComponent } from './pages/update-rfid-cards/update-rfid-
 import { SensorsComponent } from './pages/sensors/sensors.component';
 import { CreateSensorsComponent } from './pages/create-sensors/create-sensors.component';
 import { UpdateSensorComponent } from './pages/update-sensors/update-sensors.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 // Otras importaciones que tengas...
 
@@ -76,6 +78,16 @@ export const routes: Routes = [
     path: 'verification-code',
     component: VerificationCodeComponent,
     canActivate: [pendingVerificationGuard]
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    canActivate: [noAuthGuard]
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [noAuthGuard]
   },
   {
     path: '**',
