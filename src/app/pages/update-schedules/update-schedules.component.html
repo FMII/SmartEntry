@@ -1,1 +1,143 @@
-<p>update-schedules works!</p>
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-medium">Formulario de Horarios</h1>
+</header>
+
+<div class="px-6 py-10">
+    <div class="bg-white w-full h-full rounded-2xl shadow flex flex-col p-4">
+        <!-- Toast de éxito -->
+        <div *ngIf="successMessage"
+            class="fixed top-6 right-6 bg-green-50 border border-[#28A745] text-[#28A745] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+            <div class="flex items-start gap-3 p-4">
+                <div class="flex-shrink-0 bg-green-100 rounded-full p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#28A745]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Éxito</p>
+                    <p class="text-sm"></p>
+                </div>
+            </div>
+        </div>
+        <!-- Toast de error -->
+        <div *ngIf="errorMessages.length > 0"
+            class="fixed top-6 right-6 bg-red-50 border border-red-200 text-[#DC3545] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+            <div class="flex items-start gap-3 p-4">
+                <div class="flex-shrink-0 bg-red-100 rounded-full p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Error</p>
+                    <ul class="text-sm list-disc ps-4">
+                        <li *ngFor="let msg of errorMessages">{{ msg }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <form
+            class="max-w-2xl mx-auto px-10 py-16 bg-white rounded-2xl shadow-md space-y-6 border border-gray-200 text-[#0A0A0A]">
+
+            <div class="flex items-center text-lg font-semibold border-b pb-4">
+                <i class="ti ti-edit text-2xl me-2"></i>
+                Editar Horario
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Select 1 -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Profesor</label>
+                    <div class="relative">
+                        <i class="ti ti-chalkboard-teacher absolute text-xl p-2 text-[#0A0A0A]"></i>
+                        <select formControlName="grade"
+                            class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-50 border border-gray-300 appearance-none focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="" disabled selected hidden>Selecciona un profesor</option>
+                            <option *ngFor="let grado of grades" [value]="grado.value">
+                                {{ grado.label }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- Select 2 -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Materia</label>
+                    <div class="relative">
+                        <i class="ti ti-bookmark absolute text-xl p-2 text-[#0A0A0A]"></i>
+                        <select formControlName="profesor"
+                            class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-50 border border-gray-300 appearance-none focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="" disabled selected hidden>Selecciona una materia</option>
+                            <option *ngFor="let user of users" [value]="user.id">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- Select 3 -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Grupo</label>
+                    <div class="relative">
+                        <i class="ti ti-users-group absolute text-xl p-2 text-[#0A0A0A]"></i>
+                        <select formControlName="materia"
+                            class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-50 border border-gray-300 appearance-none focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="" disabled selected hidden>Selecciona un grupo</option>
+                            <option *ngFor="let materia of materias" [value]="materia.id">
+                                {{ materia.name }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- Select 4 -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Horario</label>
+                    <div class="relative">
+                        <i class="ti ti-calendar-week absolute text-xl p-2 text-[#0A0A0A]"></i>
+                        <select formControlName="grupo"
+                            class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-50 border border-gray-300 appearance-none focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="" disabled selected hidden>Selecciona un horario</option>
+                            <option *ngFor="let grupo of grupos" [value]="grupo.id">
+                                {{ grupo.name }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- Select 5 -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Salón</label>
+                    <div class="relative">
+                        <i class="ti ti-school absolute text-xl p-2 text-[#0A0A0A]"></i>
+                        <select formControlName="salon"
+                            class="w-full pl-10 pr-10 py-2 rounded-lg bg-gray-50 border border-gray-300 appearance-none focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="" disabled selected hidden>Selecciona un salón</option>
+                            <option *ngFor="let salon of salones" [value]="salon.id">
+                                {{ salon.name }}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex items-center justify-end w-full pt-4">
+                <button type="submit"
+                    class="bg-[#262626] text-white px-6 py-2 rounded-lg font-medium hover:bg-black transition">
+                    Guardar
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

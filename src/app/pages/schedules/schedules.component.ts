@@ -31,7 +31,8 @@ export class SchedulesComponent implements OnInit {
 
   constructor(
     private schedulesService: SchedulesService,
-    private groupService: GroupService) { }
+    private groupService: GroupService
+  ) { }
 
   ngOnInit(): void {
     this.loadGroups();
@@ -71,10 +72,13 @@ export class SchedulesComponent implements OnInit {
               this.schedulesByDay[timeSlot] = {};
             }
 
-            this.schedulesByDay[timeSlot][weekday] = `${item.subjects.name}`;
+            this.schedulesByDay[timeSlot][weekday] = {
+              name: item.subjects.name,
+              id: item.id
+            };
           }
+
         } else {
-          // Si la respuesta no es exitosa, limpia los datos
           this.scheduleDetails = [];
           this.schedulesByDay = {};
         }
@@ -86,6 +90,7 @@ export class SchedulesComponent implements OnInit {
       }
     });
   }
+
 
   getKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];

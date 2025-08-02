@@ -33,13 +33,22 @@
                         <th *ngFor="let day of weekdays" class="px-6 py-3">
                             {{ weekdayMap[day] }}
                         </th>
+                        <th class="px-6 py-3">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let hour of getKeys(schedulesByDay)">
                         <td class="px-6 py-4 font-medium">{{ hour }}</td>
                         <td *ngFor="let day of weekdays" class="px-6 py-4">
-                            {{ schedulesByDay[hour][day] || '' }}
+                            {{ schedulesByDay[hour][day]?.name || '' }}
+                        </td>
+                        <td class="px-6 py-4 text-start">
+                            <a *ngIf="schedulesByDay[hour][weekdays[0]]"
+                                [routerLink]="['/schedules/edit', schedulesByDay[hour][weekdays[0]]?.id]"
+                                class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-black transition">
+                                <i class="ti ti-edit text-xl"></i>
+                                Editar
+                            </a>
                         </td>
                     </tr>
                     <tr *ngIf="getKeys(schedulesByDay).length === 0">

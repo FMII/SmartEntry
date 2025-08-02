@@ -29,15 +29,10 @@ import { UpdateRfidCardsComponent } from './pages/update-rfid-cards/update-rfid-
 import { SensorsComponent } from './pages/sensors/sensors.component';
 import { CreateSensorsComponent } from './pages/create-sensors/create-sensors.component';
 import { UpdateSensorComponent } from './pages/update-sensors/update-sensors.component';
-<<<<<<< HEAD
 import { CreateSchedulesComponent } from './pages/create-schedules/create-schedules.component';
 import { UpdateSchedulesComponent } from './pages/update-schedules/update-schedules.component';
-=======
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
->>>>>>> b04651a5eeb55ac996a0d54cda869b0078a71c53
-
-// Otras importaciones que tengas...
 
 export const routes: Routes = [
   {

@@ -13,4 +13,8 @@ export class SchedulesService {
   getSchedulesByGroup(groupId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/group/${groupId}`);
   }
+  updateStudentGroup(data: { id: number, group_id?: number }) {
+  return this.http.put(`${this.apiUrl}/student/update`, data);
+}
+
 }
