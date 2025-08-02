@@ -1,1 +1,81 @@
-<p>schedules works!</p>
+<header class="bg-white border-b p-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-medium">Horarios</h1>
+</header>
+
+<div class="p-6">
+    <div class="bg-white w-full h-full rounded-2xl shadow p-6 flex flex-col">
+        <div class="flex items-center justify-end gap-4 mb-4">
+            <div>
+                <select [(ngModel)]="selectedGroupId" (change)="onGroupChange()"
+                    class="block w-auto min-w-[9rem] px-4 py-2 text-sm border border-[#E8E8E8] rounded-lg" name="grupo">
+                    <option value="" disabled selected hidden>Selecciona un grupo</option>
+                    <option *ngFor="let group of groups" [value]="group.id">
+                        {{ group.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="">
+                <a [routerLink]="['/schedule/create']"
+                    class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
+                    Agregar Horario
+                </a>
+            </div>
+        </div>
+
+        <div class="w-full border-b mb-4" style="border-color: #E8E8E8;"></div>
+
+        <!-- Tabla de horarios por día -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-[#0A0A0A]">
+                <thead class="text-xs uppercase bg-gray-50 sticky top-0 z-10">
+                    <tr>
+                        <th class="px-6 py-3">Hora</th>
+                        <th *ngFor="let day of weekdays" class="px-6 py-3">
+                            {{ weekdayMap[day] }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let hour of getKeys(schedulesByDay)">
+                        <td class="px-6 py-4 font-medium">{{ hour }}</td>
+                        <td *ngFor="let day of weekdays" class="px-6 py-4">
+                            {{ schedulesByDay[hour][day] || '' }}
+                        </td>
+                    </tr>
+                    <tr *ngIf="getKeys(schedulesByDay).length === 0">
+                        <td colspan="6" class="text-center text-gray-500 px-6 py-4">
+                            No hay horarios para mostrar.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla de detalle por materia y profesor -->
+<div class="p-6">
+    <div class="bg-white w-full h-full rounded-2xl shadow p-4 flex flex-col">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-[#0A0A0A]">
+                <thead class="text-xs uppercase bg-gray-50 sticky top-0 z-10">
+                    <tr>
+                        <th class="px-6 py-3">Materia</th>
+                        <th class="px-6 py-3">Profesor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of scheduleDetails">
+                        <td class="px-6 py-4">{{ item.subjects.name }}</td>
+                        <td class="px-6 py-4">{{ item.users.first_name }} {{ item.users.last_name }}</td>
+                    </tr>
+                    <tr *ngIf="scheduleDetails.length === 0">
+                        <td colspan="2" class="text-center text-gray-500 px-6 py-4">
+                            No hay materias asignadas.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

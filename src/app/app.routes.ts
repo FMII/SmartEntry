@@ -27,6 +27,8 @@ import { RfidCardsComponent } from './pages/rfid-cards/rfid-cards.component';
 import { CreateRfidCardComponent } from './pages/create-rfid-cards/create-rfid-cards.component';
 import { UpdateRfidCardsComponent } from './pages/update-rfid-cards/update-rfid-cards.component';
 import { SensorsComponent } from './pages/sensors/sensors.component';
+import { CreateSensorsComponent } from './pages/create-sensors/create-sensors.component';
+import { UpdateSensorComponent } from './pages/update-sensors/update-sensors.component';
 
 // Otras importaciones que tengas...
 
@@ -50,6 +52,8 @@ export const routes: Routes = [
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
 
+      { path: 'sensors/edit/:id', component: UpdateSensorComponent },
+      { path: 'sensors/create', component: CreateSensorsComponent },
       { path: 'rfid-card/edit/:id', component: UpdateRfidCardsComponent },
       { path: 'rfid-card/create', component: CreateRfidCardComponent },
       { path: 'classrooms/create', component: CreateClassroomComponent },
