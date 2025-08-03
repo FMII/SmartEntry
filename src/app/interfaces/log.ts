@@ -6,6 +6,6 @@ export interface AccessLogResponse {
 export interface AccessLogEntry {
     first_name: string;
     last_name: string;
-    role: 'student' | 'teacher' | 'admin';
+    role: 'student' | 'teacher' | 'admin' | 'secretary' | 'personal';
     access_time: string;
 }

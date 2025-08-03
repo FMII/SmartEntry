@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserManagementComponent } from './pages/user-management/user-management.component';
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-auth.guard';
+import { adminGuard } from './guards/admin.guard';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { WorkshopBlockadeComponent } from './pages/workshop-blockade/workshop-blockade.component';
 import { AcademicManagmentComponent } from './pages/academic-managment/academic-managment.component';
@@ -57,8 +58,8 @@ export const routes: Routes = [
       { path: 'subjects', component: SubjectsComponent },
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
-      { path: 'logs', component: LogsComponent },
-      { path: 'subjects-avg', component: SubjectsAvgComponent },
+      { path: 'logs', component: LogsComponent, canActivate: [adminGuard] },
+      { path: 'subjects-avg', component: SubjectsAvgComponent, canActivate: [adminGuard] },
 
       { path: 'schedules/edit/:id', component: UpdateSchedulesComponent },
       { path: 'schedules/create', component: CreateSchedulesComponent },

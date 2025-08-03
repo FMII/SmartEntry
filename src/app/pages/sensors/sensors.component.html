@@ -16,8 +16,10 @@
                         <i class="ti ti-search text-lg"></i>
                     </div>
                     <input type="text" id="search"
+                        [(ngModel)]="searchTerm" 
+                        (input)="onSearchChange($event)"
                         class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
-                        placeholder="Buscar" />
+                        placeholder="Buscar por nombre, tipo, código o salón..." />
                 </div>
             </div>
 
@@ -50,7 +52,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let sensor of sensors" class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                        <tr *ngFor="let sensor of filteredSensors" class="bg-white border-b border-gray-200 hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium whitespace-nowrap">{{ sensor.id }}</td>
                             <td class="px-6 py-4">{{ sensor.name }}</td>
                             <td class="px-6 py-4">{{ sensor.esp32_code }}</td>
@@ -67,6 +69,12 @@
                                     Editar
                                 </a>
                             </td>
+                        </tr>
+                        <tr *ngIf="filteredSensors.length === 0 && sensors.length > 0">
+                            <td colspan="8" class="px-6 py-4 text-center text-gray-500">No se encontraron sensores que coincidan con la búsqueda.</td>
+                        </tr>
+                        <tr *ngIf="sensors.length === 0">
+                            <td colspan="8" class="px-6 py-4 text-center text-gray-500">No hay sensores para mostrar.</td>
                         </tr>
                     </tbody>
                 </table>

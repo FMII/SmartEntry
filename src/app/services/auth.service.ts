@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap, catchError } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
+import { throwError, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,19 @@ export class AuthService {
           localStorage.setItem('userId', res.data.id);
           localStorage.removeItem('pendingEmail');
           localStorage.removeItem('pendingUserId');
+          
+          // Obtener inmediatamente el perfil del usuario para guardar el rol
+          this.getUserProfile().subscribe({
+            next: (profileRes) => {
+              if (profileRes.status === 'success') {
+                localStorage.setItem('userRole', profileRes.data.roles.name);
+                localStorage.setItem('roleId', profileRes.data.role_id.toString());
+              }
+            },
+            error: (error) => {
+              console.error('Error al obtener perfil después del login:', error);
+            }
+          });
         } else {
           throw new Error(res.msg || 'Código incorrecto');
         }
@@ -87,6 +100,55 @@ export class AuthService {
     
     console.log('AuthService.getCurrentUser() - no hay usuario autenticado');
     return null;
+  }
+
+  // Método para obtener el perfil completo del usuario actual incluyendo el rol
+  getUserProfile(): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    
+    if (!userId || !token) {
+      return throwError(() => new Error('Usuario no autenticado'));
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+
+    return this.http.get<any>(`https://api.smartentry.space/api/academic/users/${userId}`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Método para verificar si el usuario actual es administrador
+  isAdmin(): Observable<boolean> {
+    return this.getUserProfile().pipe(
+      map(response => {
+        if (response.status === 'success') {
+          // Almacenar el rol en localStorage para uso posterior
+          localStorage.setItem('userRole', response.data.roles.name);
+          localStorage.setItem('roleId', response.data.role_id.toString());
+          
+          // Verificar si es administrador (role_id = 1 o roles.name = 'Administrador')
+          return response.data.role_id === 1 || response.data.roles.name === 'Administrador';
+        }
+        return false;
+      }),
+      catchError(error => {
+        console.error('Error al obtener perfil de usuario:', error);
+        return of(false);
+      })
+    );
+  }
+
+  // Método sincrónico para verificar rol desde localStorage
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
+
+  getUserRoleId(): number | null {
+    const roleId = localStorage.getItem('roleId');
+    return roleId ? parseInt(roleId) : null;
   }
 
   // Método para restablecer contraseña
