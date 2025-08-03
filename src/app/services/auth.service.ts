@@ -162,6 +162,15 @@ export class AuthService {
     );
   }
 
+  // Método para reenviar código de verificación
+  resendCode(email: string): Observable<any> {
+    return this.http.post<any>('https://api.smartentry.space/api/academic/resend', {
+      email
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'Ocurrió un error inesperado.';
 
