@@ -37,8 +37,7 @@ export class UpdateUserComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       role_id: ['', Validators.required],
       is_active: [true],
-      password: ['', [this.passwordValidator]], // Campo opcional para nueva contraseña
-      confirmPassword: [''] // Campo para confirmar la nueva contraseña
+      password: ['', [this.passwordValidator]] // Campo opcional para nueva contraseña
     });
   }
 
@@ -76,17 +75,6 @@ export class UpdateUserComponent implements OnInit {
     }
     
     return null; // Contraseña válida
-  }
-
-  // Validador para confirmar que las contraseñas coincidan
-  passwordsMatch() {
-    const password = this.registerForm?.get('password')?.value;
-    const confirmPassword = this.registerForm?.get('confirmPassword')?.value;
-    
-    if (password && confirmPassword && password !== confirmPassword) {
-      return true;
-    }
-    return false;
   }
 
   ngOnInit() {
@@ -134,12 +122,6 @@ export class UpdateUserComponent implements OnInit {
       return;
     }
 
-    // Verificar si las contraseñas coinciden cuando se proporciona una contraseña
-    if (this.passwordsMatch()) {
-      this.errorMessages.push('Las contraseñas no coinciden.');
-      return;
-    }
-
     this.loading = true;
 
     const formValue = {
@@ -151,7 +133,6 @@ export class UpdateUserComponent implements OnInit {
     if (!formValue.password) {
       delete formValue.password;
     }
-    delete formValue.confirmPassword; // Siempre eliminar este campo
 
     this.userService.updateUser(this.userId, formValue).subscribe({
       next: (response) => {

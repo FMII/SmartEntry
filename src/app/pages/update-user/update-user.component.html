@@ -112,34 +112,17 @@
         </div>
       </div>
 
-      <!-- Campos de contraseña en dos columnas (opcional) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Nueva contraseña -->
-        <div>
-          <label for="password" class="block text-sm font-medium mb-1">Nueva Contraseña (Opcional)</label>
-          <div class="relative">
-            <i class="ti ti-lock absolute text-xl p-2 text-[#0A0A0A]"></i>
-            <input id="password" type="password" formControlName="password" placeholder="Dejar en blanco para mantener la actual"
-              class="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black" />
-          </div>
-          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['passwordInvalid']"
-            class="text-[#DC3545] text-sm mt-1">
-            {{ registerForm.get('password')?.errors?.['passwordInvalid'] }}
-          </div>
+      <!-- Nueva contraseña (opcional) -->
+      <div>
+        <label for="password" class="block text-sm font-medium mb-1">Nueva Contraseña (Opcional)</label>
+        <div class="relative">
+          <i class="ti ti-lock absolute text-xl p-2 text-[#0A0A0A]"></i>
+          <input id="password" type="password" formControlName="password" placeholder="Dejar en blanco para mantener la actual"
+            class="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black" />
         </div>
-
-        <!-- Confirmar nueva contraseña -->
-        <div>
-          <label for="confirmPassword" class="block text-sm font-medium mb-1">Confirmar Nueva Contraseña</label>
-          <div class="relative">
-            <i class="ti ti-lock-check absolute text-xl p-2 text-[#0A0A0A]"></i>
-            <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Confirma la nueva contraseña"
-              class="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black" />
-          </div>
-          <div *ngIf="passwordsMatch() && registerForm.get('confirmPassword')?.touched"
-            class="text-[#DC3545] text-sm mt-1">
-            Las contraseñas no coinciden.
-          </div>
+        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['passwordInvalid']"
+          class="text-[#DC3545] text-sm mt-1">
+          {{ registerForm.get('password')?.errors?.['passwordInvalid'] }}
         </div>
       </div>
 
