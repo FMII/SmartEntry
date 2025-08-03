@@ -8,7 +8,7 @@ import { GroupAttendanceResponse, TopAbsencesResponse } from '../interfaces/top-
 })
 export class GraphicsService {
 
-  private baseUrl = 'http://localhost:3000/api/academic/graphics';
+  private baseUrl = 'https://api.smartentry.space/api/academic/graphics';
 
   constructor(private http: HttpClient) { }
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RfidCardsService {
 
-  private baseUrl = 'http://localhost:3000/api/academic/rfid';
+  private baseUrl = 'https://api.smartentry.space/api/academic/rfid';
 
   constructor(private http: HttpClient) { }
 

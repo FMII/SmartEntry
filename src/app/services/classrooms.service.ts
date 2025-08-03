@@ -8,7 +8,7 @@ import { ClassroomResponse } from '../interfaces/classroom';
   providedIn: 'root',
 })
 export class ClassroomsService {
-  private baseUrl = 'http://localhost:3000/api/academic/classrooms';
+  private baseUrl = 'https://api.smartentry.space/api/academic/classrooms';
 
   constructor(private http: HttpClient) { }
 
@@ -28,7 +28,7 @@ export class ClassroomsService {
   }
 
   updateClassroomStatus(id: number, isBlocked: boolean) {
-    return this.http.patch(`http://localhost:3000/api/academic/classrooms/${id}`, {
+    return this.http.patch(`https://api.smartentry.space/api/academic/classrooms/${id}`, {
       is_blocked: isBlocked
     });
   }
