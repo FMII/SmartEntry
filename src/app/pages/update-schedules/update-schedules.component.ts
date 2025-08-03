@@ -120,8 +120,7 @@ export class UpdateSchedulesComponent {
               classroomId: data.classroom_id,
               teacherId: data.teacher_id
             });
-
-            // 🔹 Muevo los valueChanges para que se suscriban después del patchValue
+            /*
             this.FormSchedule.get('grupoId')?.valueChanges.subscribe(value => {
               console.log('Grupo seleccionado:', value);
             });
@@ -137,7 +136,8 @@ export class UpdateSchedulesComponent {
             this.FormSchedule.get('teacherId')?.valueChanges.subscribe(value => {
               console.log('Maestro seleccionado:', value);
             });
-          }, 300); // 🔹 aumenta a 300 ms para asegurar carga de datos
+            */
+          }, 300);
         },
         error: (err) => {
           console.error('Error al obtener datos del horario', err);

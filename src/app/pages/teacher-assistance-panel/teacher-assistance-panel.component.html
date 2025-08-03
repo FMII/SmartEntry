@@ -8,18 +8,67 @@
     <div class="col-span-12 ">
         <header class="bg-white border-b p-2 flex items-center justify-between flex-shrink-0">
             <h1 class="text-lg font-medium">¡Bienvenido!</h1>
+
+            <!-- 👇 SELECT AGREGADO: filtro de grupo en parte superior derecha -->
+            <div class="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-2 py-1">
+                <i class="ti ti-filter-2 text-gray-700 pl-2"></i>
+                <select (change)="onGroupChange($event)"
+                    class="bg-transparent focus:outline-none text-sm text-gray-700 w-full px-4 appearance-none"
+                    [value]="selectedGroupId">
+                    <option disabled hidden>Filtrar</option>
+                    <option *ngFor="let group of groups_data" [value]="group.id">
+                        {{ group.name }}
+                    </option>
+                </select>
+            </div>
+            <!-- ☝️ FIN DEL SELECT AGREGADO -->
         </header>
+
     </div>
-    <div class="col-span-12 p-2">
+    <div class="col-span-12 px-2 py-1">
         <div class="p-2 text-sm">
             <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-8 bg-white p-2 rounded-lg">
+                <div class="col-span-8 bg-white border border-[#E8E8E8] p-2 rounded-lg">
                     <div class="">
                         <canvas #barCanvas></canvas>
                     </div>
                 </div>
-                <div class="col-span-4 bg-white p-2 rounded-lg">
-                    hola
+                <div class="col-span-4 bg-white border border-[#E8E8E8] p-2 rounded-lg">
+                    <div class="col-span-12 px-4 py-2 border-b border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <p class="text-[#0A0A0A] font-semibold text-md">Informacion del alumno</p>
+                        </div>
+                    </div>
+                    <div class="h-48 w-full touch-auto overflow-auto rounded-lg">
+                        <table class="table-auto w-full border border-gray-100">
+                            <thead class="text-gray-400 bg-gray-50 border border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Grupo
+                                    </th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">
+                                        Estudiante
+                                    </th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">
+                                        Inasistencias
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let group of groups">
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ group.group_name }}</td>
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ group.top_student?.name }}</td>
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ group.top_student?.absences }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -27,50 +76,55 @@
     <div class="col-span-12">
         <!-- TABLA DE ASISTENCIAS -->
         <div class="px-4 pt-4 pb-9 text-sm">
-            <div class="grid grid-cols-12 bg-white rounded-lg">
-                <div class="col-span-12 px-4 py-2 border-b">
+            <div class="grid grid-cols-12 bg-white border border-[#E8E8E8] rounded-lg">
+                <div class="col-span-12 px-4 py-2 border-b border-gray-100">
                     <div class="flex justify-between items-center">
-                        <p class="text-gray-700">Asistencia por grupo</p>
-                        <div class="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-2 py-1">
-                            <i class="ti ti-filter-2 text-gray-700 pl-2"></i>
-                            <select
-                                class="bg-transparent focus:outline-none text-sm text-gray-700 w-full px-4 appearance-none">
-                                <option disabled selected>Filtrar</option>
-                                <option>6-A</option>
-                                <option>6-B</option>
-                                <option>6-C</option>
-                            </select>
-                        </div>
+                        <p class="text-[#0A0A0A] font-semibold text-md">Asistencia por grupo</p>
+                        
                     </div>
                 </div>
                 <div class="col-span-12 px-4 py-2">
-                    <div class="h-48 w-full touch-auto overflow-auto ...">
-                        <table class="table-auto w-full">
-                            <thead>
+                    <div class="h-48 w-full touch-auto overflow-auto rounded-lg">
+                        <table class="table-auto w-full border border-gray-100">
+                            <thead class="text-gray-400 bg-gray-50 border border-gray-200">
                                 <tr>
-                                    <th>Song</th>
-                                    <th>Artist</th>
-                                    <th>Year</th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Nombre
+                                    </th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Apellido
+                                    </th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Fecha
+                                    </th>
+                                    <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Estado
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                                    <td>Malcolm Lockyer</td>
-                                    <td>1961</td>
+                            <tbody class="border border-gray-200">
+                                <tr class="first-letter:uppercase" *ngIf="attendanceData.length === 0">
+                                    <td colspan="4" class="px-6 py-3 text-sm text-center text-gray-500">
+                                        No hay asistencias por mostrar
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>Witchy Woman</td>
-                                    <td>The Eagles</td>
-                                    <td>1972</td>
-                                </tr>
-                                <tr>
-                                    <td>Shining Star</td>
-                                    <td>Earth, Wind, and Fire</td>
-                                    <td>1975</td>
+                                <tr *ngFor="let record of attendanceData">
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ record.first_name }}</td>
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ record.last_name }}</td>
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        {{ record.date | date:'shortDate' }}</td>
+                                    <td
+                                        class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
+                                        <span
+                                            [ngClass]="{ 'text-[#28A745]': record.status === 'present', 'text-[#DC3545]': record.status === 'absent', 'text-[#FFC107]': record.status === 'late' }">
+                                            <i class="ti ti-circle-filled text-xs"></i> {{ record.status }}
+                                        </span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
