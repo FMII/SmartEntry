@@ -45,7 +45,7 @@ export class VerificationCodeComponent implements OnInit {
     this.authService.verifyCode(email, code).subscribe({
       next: () => {
         localStorage.removeItem('pendingEmail');
-        this.router.navigate(['/user-management']);
+        this.router.navigate(['/control-panel']);
       },
       error: (err) => {
         this.errorMessage = err.message || 'Error al verificar el código';

@@ -6,7 +6,7 @@ export const pendingVerificationGuard: CanActivateFn = (route, state) => {
 
   // Si ya tienes token, no tiene sentido ir a verificar código, redirige al dashboard
   if (token) {
-    window.location.href = '/user-management';
+    window.location.href = '/control-panel';
     return false;
   }
 
