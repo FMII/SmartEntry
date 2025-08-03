@@ -3,7 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserManagementComponent } from './pages/user-management/user-management.component';
 import { authGuard } from './guards/auth.guard';
-import { noAuthGuard } from './guards/no-auth.guard';  // importa el guard inverso
+import { noAuthGuard } from './guards/no-auth.guard';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { WorkshopBlockadeComponent } from './pages/workshop-blockade/workshop-blockade.component';
 import { AcademicManagmentComponent } from './pages/academic-managment/academic-managment.component';
@@ -34,6 +34,7 @@ import { UpdateSchedulesComponent } from './pages/update-schedules/update-schedu
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { SubjectsAvgComponent } from './pages/subjects-avg/subjects-avg.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,7 @@ export const routes: Routes = [
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
       { path: 'logs', component: LogsComponent },
+      { path: 'subjects-avg', component: SubjectsAvgComponent },
 
       { path: 'schedules/edit/:id', component: UpdateSchedulesComponent },
       { path: 'schedules/create', component: CreateSchedulesComponent },
