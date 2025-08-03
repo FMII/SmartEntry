@@ -23,7 +23,7 @@ interface ApiResponse<T> {
 })
 export class SensorsService {
 
-  private baseUrl = 'http://localhost:3000/api/academic/hardware';
+  private baseUrl = 'https://api.smartentry.space/api/academic/hardware';
 
   constructor(private http: HttpClient) { }
 

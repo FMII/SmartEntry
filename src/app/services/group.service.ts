@@ -13,8 +13,8 @@ interface Group {
   providedIn: 'root'
 })
 export class GroupService {
-  private apiUrl = 'http://localhost:3000/api/academic/groups/create';
-  private listUrl = 'http://localhost:3000/api/academic/groups/list';
+  private apiUrl = 'https://api.smartentry.space/api/academic/groups/create';
+  private listUrl = 'https://api.smartentry.space/api/academic/groups/list';
 
   constructor(private http: HttpClient) { }
 
@@ -33,19 +33,19 @@ export class GroupService {
 
 
   getGroupById(id: number): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/academic/groups/${id}`);
+    return this.http.get(`https://api.smartentry.space/api/academic/groups/${id}`);
   }
   updateGroup(id: number, group: Group): Observable<any> {
-    return this.http.put(`http://localhost:3000/api/academic/groups/${id}`, group);
+    return this.http.put(`https://api.smartentry.space/api/academic/groups/${id}`, group);
   }
   getUsersByRole(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/academic/users/roles/3');
+    return this.http.get('https://api.smartentry.space/api/academic/users/roles/3');
   }
   assignGroupToStudent(payload: { student_id: number; group_id: number; academic_year: number }): Observable<any> {
-    return this.http.post('http://localhost:3000/api/academic/student-groups/assign', payload);
+    return this.http.post('https://api.smartentry.space/api/academic/student-groups/assign', payload);
   }
   getStudentsByGroup(groupId: number): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/academic/student-groups/${groupId}/students`);
+    return this.http.get(`https://api.smartentry.space/api/academic/student-groups/${groupId}/students`);
   }
 
 }

@@ -8,11 +8,11 @@ import { TeacherSubjectGroupCreate, TeacherSubjectGroupResponse } from '../inter
   providedIn: 'root'
 })
 export class SchedulesService {
-  private apiUrl = 'http://localhost:3000/api/academic/teacher-subject-groups';
-  private apiGetSchedules = 'http://localhost:3000/api/academic/schedules';
-  private apiCreateUrl = 'http://localhost:3000/api/academic/teacher-subject-groups/create';
-  private apiUpdateUrl = 'http://localhost:3000/api/academic/teacher-subject-groups';
-  private apischeduleById = 'http://localhost:3000/api/academic/teacher-subject-groups';
+  private apiUrl = 'https://api.smartentry.space/api/academic/teacher-subject-groups';
+  private apiGetSchedules = 'https://api.smartentry.space/api/academic/schedules';
+  private apiCreateUrl = 'https://api.smartentry.space/api/academic/teacher-subject-groups/create';
+  private apiUpdateUrl = 'https://api.smartentry.space/api/academic/teacher-subject-groups';
+  private apischeduleById = 'https://api.smartentry.space/api/academic/teacher-subject-groups';
 
   constructor(private http: HttpClient) { }
 

@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/academic/login';
+  private apiUrl = 'https://api.smartentry.space/api/academic/login';
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   verifyCode(email: string, code: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/academic/users/verify', {
+    return this.http.post<any>('https://api.smartentry.space/api/academic/users/verify', {
       email,
       code
     }).pipe(
@@ -63,7 +63,7 @@ export class AuthService {
 
   // Método para solicitar recuperación de contraseña
   forgotPassword(email: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/academic/forgot-password', {
+    return this.http.post<any>('https://api.smartentry.space/api/academic/forgot-password', {
       email
     }).pipe(
       catchError(this.handleError)
@@ -91,7 +91,7 @@ export class AuthService {
 
   // Método para restablecer contraseña
   resetPassword(email: string, token: string, newPassword: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/academic/reset-password', {
+    return this.http.post<any>('https://api.smartentry.space/api/academic/reset-password', {
       email,
       token,
       newPassword

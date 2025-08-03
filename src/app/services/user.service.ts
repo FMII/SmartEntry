@@ -33,9 +33,9 @@ export interface UsersResponse {
 })
 export class UserRegisterService {
 
-  private apiUrl = 'http://localhost:3000/api/academic/register';
-  private usersUrl = 'http://localhost:3000/api/academic/users';
-  private teachersUrl = 'http://localhost:3000/api/academic/users/roles/4';
+  private apiUrl = 'https://api.smartentry.space/api/academic/register';
+  private usersUrl = 'https://api.smartentry.space/api/academic/users';
+  private teachersUrl = 'https://api.smartentry.space/api/academic/users/roles/4';
 
   constructor(private http: HttpClient) { }
 
@@ -72,7 +72,7 @@ export class UserRegisterService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<ApiResponse>(`http://localhost:3000/api/academic/update/${id}`, updatedData, { headers });
+    return this.http.put<ApiResponse>(`https://api.smartentry.space/api/academic/update/${id}`, updatedData, { headers });
   }
 
   getUserById(id: number): Observable<ApiResponse> {
@@ -81,7 +81,7 @@ export class UserRegisterService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<ApiResponse>(`http://localhost:3000/api/academic/update/${id}`, { headers });
+    return this.http.get<ApiResponse>(`https://api.smartentry.space/api/academic/update/${id}`, { headers });
   }
 
   getTeachers(): Observable<TeacherResponse> {

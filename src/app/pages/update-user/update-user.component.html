@@ -112,6 +112,32 @@
         </div>
       </div>
 
+      <!-- Nueva contraseña (opcional) -->
+      <div>
+        <label for="password" class="block text-sm font-medium mb-1">Nueva Contraseña (Opcional)</label>
+        <div class="relative">
+          <i class="ti ti-lock absolute text-xl p-2 text-[#0A0A0A]"></i>
+          <input id="password" type="password" formControlName="password" placeholder="Dejar en blanco para mantener la actual"
+            class="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black" />
+        </div>
+        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['passwordInvalid']"
+          class="text-[#DC3545] text-sm mt-1">
+          {{ registerForm.get('password')?.errors?.['passwordInvalid'] }}
+        </div>
+      </div>
+
+      <!-- Información sobre requisitos de contraseña -->
+      <div *ngIf="registerForm.get('password')?.value" class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+        <p class="text-sm text-blue-800 font-medium mb-1">Requisitos de la contraseña:</p>
+        <ul class="text-xs text-blue-700 list-disc list-inside space-y-1">
+          <li>Al menos 8 caracteres de longitud</li>
+          <li>Una letra minúscula (a-z)</li>
+          <li>Una letra mayúscula (A-Z)</li>
+          <li>Un número (0-9)</li>
+          <li>Un carácter especial (!&#64;#$%^&amp;*)</li>
+        </ul>
+      </div>
+
       <!-- Usuario Activo -->
       <div class="flex items-center space-x-2">
         <input type="checkbox" id="is_active" formControlName="is_active"
