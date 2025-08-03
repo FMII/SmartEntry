@@ -66,6 +66,7 @@ export class SchedulesComponent {
     if (!this.selectedGroupId) return [];
     return this.showSchedules.filter(s => s.group_id === this.selectedGroupId);
   }
+  
   onGroupChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedGroupId = Number(value);

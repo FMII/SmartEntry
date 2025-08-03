@@ -33,6 +33,7 @@ import { CreateSchedulesComponent } from './pages/create-schedules/create-schedu
 import { UpdateSchedulesComponent } from './pages/update-schedules/update-schedules.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { LogsComponent } from './pages/logs/logs.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,7 @@ export const routes: Routes = [
       { path: 'subjects', component: SubjectsComponent },
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
+      { path: 'logs', component: LogsComponent },
 
       { path: 'schedules/edit/:id', component: UpdateSchedulesComponent },
       { path: 'schedules/create', component: CreateSchedulesComponent },
