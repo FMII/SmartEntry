@@ -20,8 +20,9 @@
                                 d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z" />
                         </svg>
                     </div>
-                    <input type="text" id="search" placeholder="Buscar"
-                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-black focus:outline-none" />
+                    <input type="text" id="search" placeholder="Buscar por nombre"
+                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-black focus:outline-none" 
+                        [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
                 </div>
             </div>
 
@@ -38,7 +39,7 @@
         <!-- Contenedor de cards -->
         <div class="overflow-y-auto max-h-[475px] rounded-lg">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div *ngFor="let classroom of classrooms"
+                <div *ngFor="let classroom of filteredClassrooms"
                     class="bg-white shadow-sm border border-slate-200 rounded-xl w-full"  style="overflow: hidden;">
                     <!-- Header -->
                     <div class="border-b bg-[#FAFAFA] border-slate-200 pt-3 pb-2 px-4">
