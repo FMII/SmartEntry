@@ -1,0 +1,28 @@
+/* Animación para el icono pulsante */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Efectos adicionales */
+.bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #f7fafc, #edf2f7);
+}
+
+/* Hover effects */
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}

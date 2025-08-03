@@ -33,6 +33,7 @@ import { CreateSchedulesComponent } from './pages/create-schedules/create-schedu
 import { UpdateSchedulesComponent } from './pages/update-schedules/update-schedules.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { SubjectsAvgComponent } from './pages/subjects-avg/subjects-avg.component';
 
@@ -95,6 +96,10 @@ export const routes: Routes = [
     path: 'reset-password',
     component: ResetPasswordComponent,
     canActivate: [noAuthGuard]
+  },
+  {
+    path: 'maintenance',
+    component: MaintenanceComponent
   },
   {
     path: '**',
