@@ -42,6 +42,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [authGuard],
     children: [
+      { path: '', redirectTo: 'control-panel', pathMatch: 'full' },
       { path: 'student-assistance', component: StudentAssistancePanelComponent },
       { path: 'control-panel', component: TeacherAssistancePanelComponent },
       { path: 'user-management', component: UserManagementComponent },

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubjectsAvgService } from '../../services/subjects-avg.service';
 import { GroupSubjectAvg, SubjectAvg, SubjectsAvgResponse } from '../../interfaces/subject-avg';
+import { Classroom } from '../../interfaces/classroom';
+import { ClassroomsService } from '../../services/classrooms.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-subjects-avg',
@@ -11,10 +14,21 @@ import { GroupSubjectAvg, SubjectAvg, SubjectsAvgResponse } from '../../interfac
   styleUrl: './subjects-avg.component.css'
 })
 export class SubjectsAvgComponent implements OnInit {
+  classrooms: Classroom[] = [];
+  selectedClassroomId: number | null = null;
   subjectsAvg: GroupSubjectAvg[] = [];
   isLoading = true;
 
-  constructor(private subjectsAvgService: SubjectsAvgService) {}
+  FormClassroom: FormGroup;
+
+  constructor(
+    private subjectsAvgService: SubjectsAvgService,
+    private classroomService: ClassroomsService,
+  ) {
+    this.FormClassroom = new FormGroup({
+      grupoId: new FormControl('', Validators.required),
+    });
+  }
 
   ngOnInit(): void {
     this.subjectsAvgService.getSubjectsAverage().subscribe({
@@ -27,5 +41,19 @@ export class SubjectsAvgComponent implements OnInit {
         this.isLoading = false;
       }
     });
+
+    this.classroomService.getAllClassrooms().subscribe({
+      next: (response) => {
+        this.classrooms = response.data;
+        this.selectedClassroomId = this.classrooms[0]?.id ?? null;
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  onGroupChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.selectedClassroomId = Number(value);
+    console.log('Grupo seleccionado:', this.selectedClassroomId);
   }
 }
