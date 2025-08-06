@@ -14,8 +14,10 @@
                         <i class="ti ti-search text-lg text-"></i>
                     </div>
                     <input type="text" id="search"
+                        [(ngModel)]="searchTerm" 
+                        (input)="onSearchChange($event)"
                         class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
-                        placeholder="Buscar" />
+                        placeholder="Buscar por nombre o código..." />
                 </div>
             </div>
             <!-- Agregar Materia -->
@@ -44,7 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let subject of subjects">
+                        <tr *ngFor="let subject of filteredSubjects">
                             <td class="px-6 py-4">{{ subject.id }}</td>
                             <td class="px-6 py-4">{{ subject.name }}</td>
                             <td class="px-6 py-4">{{ subject.code }}</td>
@@ -55,6 +57,12 @@
                                     Editar
                                 </a>
                             </td>
+                        </tr>
+                        <tr *ngIf="filteredSubjects.length === 0 && subjects.length > 0">
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">No se encontraron materias que coincidan con la búsqueda.</td>
+                        </tr>
+                        <tr *ngIf="subjects.length === 0">
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay materias para mostrar.</td>
                         </tr>
                     </tbody>
                 </table>

@@ -4,13 +4,13 @@ import { FormControl, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Vali
 import { ClassroomsService } from '../../services/classrooms.service';
 import { LogsService } from '../../services/logs.service';
 import { AccessLogEntry } from '../../interfaces/log';
-import { NgFor, AsyncPipe, NgIf, DatePipe, CommonModule } from '@angular/common';
+import { NgFor, AsyncPipe, NgIf, CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-logs',
   standalone: true,
-  imports: [NgFor, NgIf, DatePipe, CommonModule, FormsModule, HttpClientModule, ReactiveFormsModule],
+  imports: [NgFor, NgIf, CommonModule, FormsModule, HttpClientModule, ReactiveFormsModule],
   templateUrl: './logs.component.html',
   styleUrl: './logs.component.css'
 })
@@ -92,6 +92,57 @@ export class LogsComponent implements OnInit {
     const minutos = date.getUTCMinutes().toString().padStart(2, '0');
     const segundos = date.getUTCSeconds().toString().padStart(2, '0');
     return `${horas}:${minutos}:${segundos}`;
+  }
+
+  // Método para formatear la fecha y hora completa sin conversión de zona horaria
+  formatearFechaLocal(fechaStr: string): string {
+    try {
+      // Si la fecha viene con información de zona horaria, removerla para tratarla como local
+      let fechaLimpia = fechaStr;
+      
+      // Remover información de zona horaria si existe (Z, +00:00, etc.)
+      fechaLimpia = fechaLimpia.replace(/[Z]$/, '').replace(/[+-]\d{2}:\d{2}$/, '');
+      
+      // Crear fecha tratándola como si fuera local (no UTC)
+      const partes = fechaLimpia.split(/[T\s]/);
+      const fechaParte = partes[0];
+      const horaParte = partes[1] || '00:00:00';
+      
+      const [año, mes, dia] = fechaParte.split('-').map(Number);
+      const [horas, minutos, segundos = 0] = horaParte.split(':').map(Number);
+      
+      // Crear fecha directamente sin conversión de zona horaria
+      const date = new Date(año, mes - 1, dia, horas, minutos, segundos);
+      
+      // Formatear
+      const diaStr = date.getDate().toString().padStart(2, '0');
+      const mesStr = (date.getMonth() + 1).toString().padStart(2, '0');
+      const añoStr = date.getFullYear();
+      const horasStr = date.getHours().toString().padStart(2, '0');
+      const minutosStr = date.getMinutes().toString().padStart(2, '0');
+      
+      return `${diaStr}-${mesStr}-${añoStr} ${horasStr}:${minutosStr}`;
+    } catch (error) {
+      console.error('Error al formatear fecha:', error, fechaStr);
+      return fechaStr; // Devolver la fecha original si hay error
+    }
+  }
+
+  getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'student':
+        return 'Estudiante';
+      case 'teacher':
+        return 'Docente';
+      case 'secretary':
+        return 'Secretaria';
+      case 'personal':
+        return 'Personal';
+      case 'admin':
+        return 'Administrador';
+      default:
+        return 'Desconocido';
+    }
   }
 
 }

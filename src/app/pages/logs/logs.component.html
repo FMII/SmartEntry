@@ -82,10 +82,9 @@
                             <td class="px-6 py-3">{{ log.first_name }}</td>
                             <td class="px-6 py-3">{{ log.last_name }}</td>
                             <td class="px-6 py-3">
-                                {{ log.role === 'student' ? 'Estudiante' : log.role === 'teacher' ? 'Docente' :
-                                'Administrador' }}
+                                {{ getRoleDisplayName(log.role) }}
                             </td>
-                            <td class="px-6 py-3">{{ log.access_time | date: 'dd-MM-yyyy HH:mm' }}</td>
+                            <td class="px-6 py-3">{{ formatearFechaLocal(log.access_time) }}</td>
                         </tr>
                     </tbody>
 

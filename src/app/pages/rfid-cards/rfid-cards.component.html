@@ -32,7 +32,7 @@
                     </div>
                     <input type="text" id="search"
                         class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
-                        placeholder="Buscar" />
+                        placeholder="Buscar" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
                 </div>
             </div>
             <!-- Agregar Usuario -->
@@ -51,7 +51,7 @@
         <!-- Contenedor de cards -->
         <div class="overflow-y-auto max-h-[475px] rounded-lg">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div *ngFor="let rfid of rfids" class="relative">
+                <div *ngFor="let rfid of filteredRfids" class="relative">
                     <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
                         <div class="mb-4 flex justify-between items-center">
                             <span class="bg-black text-white text-xs px-4 py-1 rounded-xl">RFID</span>

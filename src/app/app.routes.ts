@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserManagementComponent } from './pages/user-management/user-management.component';
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-auth.guard';
+import { adminGuard } from './guards/admin.guard';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { WorkshopBlockadeComponent } from './pages/workshop-blockade/workshop-blockade.component';
 import { AcademicManagmentComponent } from './pages/academic-managment/academic-managment.component';
@@ -33,6 +34,7 @@ import { CreateSchedulesComponent } from './pages/create-schedules/create-schedu
 import { UpdateSchedulesComponent } from './pages/update-schedules/update-schedules.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { SubjectsAvgComponent } from './pages/subjects-avg/subjects-avg.component';
 
@@ -56,8 +58,8 @@ export const routes: Routes = [
       { path: 'subjects', component: SubjectsComponent },
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
-      { path: 'logs', component: LogsComponent },
-      { path: 'subjects-avg', component: SubjectsAvgComponent },
+      { path: 'logs', component: LogsComponent, canActivate: [adminGuard] },
+      { path: 'subjects-avg', component: SubjectsAvgComponent, canActivate: [adminGuard] },
 
       { path: 'schedules/edit/:id', component: UpdateSchedulesComponent },
       { path: 'schedules/create', component: CreateSchedulesComponent },
@@ -95,6 +97,10 @@ export const routes: Routes = [
     path: 'reset-password',
     component: ResetPasswordComponent,
     canActivate: [noAuthGuard]
+  },
+  {
+    path: 'maintenance',
+    component: MaintenanceComponent
   },
   {
     path: '**',

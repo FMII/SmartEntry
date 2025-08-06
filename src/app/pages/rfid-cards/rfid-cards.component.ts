@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { RfidCardsService } from '../../services/rfid-cards.service';
 import { UserRegisterService, User } from '../../services/user.service';
@@ -8,12 +8,14 @@ import { UserRegisterService, User } from '../../services/user.service';
 @Component({
   selector: 'app-rfid-cards',
   standalone: true,
-  imports: [RouterLink, RouterModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, RouterModule, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './rfid-cards.component.html',
   styleUrl: './rfid-cards.component.css'
 })
 export class RfidCardsComponent implements OnInit {
   rfids: any[] = [];
+  filteredRfids: any[] = [];
+  searchTerm: string = '';
   users: User[] = [];
   activeDropdownId: number | null = null;
 
@@ -48,6 +50,7 @@ export class RfidCardsComponent implements OnInit {
                 userFullName: user ? `${user.first_name} ${user.last_name}` : 'Desconocido'
               };
             });
+            this.filteredRfids = [...this.rfids];
           }
         });
       }
@@ -56,6 +59,23 @@ export class RfidCardsComponent implements OnInit {
 
   toggleDropdown(id: number): void {
     this.activeDropdownId = this.activeDropdownId === id ? null : id;
+  }
+
+  onSearchChange(): void {
+    this.filterRfids();
+  }
+
+  filterRfids(): void {
+    if (!this.searchTerm || this.searchTerm.trim() === '') {
+      this.filteredRfids = [...this.rfids];
+    } else {
+      const search = this.searchTerm.toLowerCase().trim();
+      this.filteredRfids = this.rfids.filter(rfid => {
+        return (rfid.rfid_code && rfid.rfid_code.toLowerCase().includes(search)) ||
+               (rfid.userFullName && rfid.userFullName.toLowerCase().includes(search)) ||
+               (rfid.status && rfid.status.toLowerCase().includes(search));
+      });
+    }
   }
 
   closeDropdown(): void {

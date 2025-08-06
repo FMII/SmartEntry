@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 export class VerificationCodeComponent implements OnInit {
   codeForm: FormGroup;
   errorMessage = '';
+  successMessage = '';
+  isResending = false;
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +51,36 @@ export class VerificationCodeComponent implements OnInit {
       },
       error: (err) => {
         this.errorMessage = err.message || 'Error al verificar el código';
+      }
+    });
+  }
+
+  resendCode() {
+    const email = localStorage.getItem('pendingEmail');
+    
+    if (!email) {
+      this.errorMessage = 'No hay correo pendiente para reenviar código.';
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.isResending = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.authService.resendCode(email).subscribe({
+      next: () => {
+        this.successMessage = 'Código reenviado exitosamente a tu correo electrónico.';
+        this.isResending = false;
+        
+        // Limpiar mensaje después de 5 segundos
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 5000);
+      },
+      error: (err: any) => {
+        this.errorMessage = err.message || 'Error al reenviar el código';
+        this.isResending = false;
       }
     });
   }

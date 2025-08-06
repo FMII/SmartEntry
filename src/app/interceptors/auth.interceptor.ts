@@ -18,10 +18,18 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
 
   return next(cloned).pipe(
     catchError((error: HttpErrorResponse) => {
+      // Error de conexión (servidor caído, sin internet, etc.)
+      if (error.status === 0 || error.status >= 500) {
+        router.navigate(['/maintenance']);
+        return throwError(() => error);
+      }
+      
+      // Error de autenticación
       if (error.status === 401 || error.status === 403) {
         localStorage.removeItem('token');
         router.navigate(['/login']);
       }
+      
       return throwError(() => error);
     })
   );

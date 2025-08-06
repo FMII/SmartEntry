@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { UserRegisterService, User } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule, RouterLink],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']
 })
@@ -18,6 +18,8 @@ export class UserManagementComponent implements OnInit {
   errorMessages: string[] = [];
   successMessage = '';
   users: User[] = [];
+  filteredUsers: User[] = []; // Lista filtrada para mostrar
+  searchTerm: string = ''; // Término de búsqueda
   modalVisible = false;
 
 
@@ -62,6 +64,7 @@ export class UserManagementComponent implements OnInit {
       next: (response) => {
         if (response.status === 'success') {
           this.users = response.data;
+          this.filteredUsers = [...this.users]; // Inicializar lista filtrada
         } else {
           this.errorMessages = ['Error al cargar usuarios.'];
         }
@@ -70,6 +73,25 @@ export class UserManagementComponent implements OnInit {
         this.errorMessages = ['Error al cargar usuarios.'];
       }
     });
+  }
+
+  // Método para filtrar usuarios
+  onSearchChange(event: any) {
+    this.searchTerm = event.target.value.toLowerCase();
+    this.filterUsers();
+  }
+
+  filterUsers() {
+    if (!this.searchTerm) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter(user =>
+        user.first_name.toLowerCase().includes(this.searchTerm) ||
+        user.last_name.toLowerCase().includes(this.searchTerm) ||
+        user.email.toLowerCase().includes(this.searchTerm) ||
+        user.roles.name.toLowerCase().includes(this.searchTerm)
+      );
+    }
   }
 
   // Cargar datos del usuario en el formulario para editar
