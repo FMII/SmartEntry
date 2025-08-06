@@ -37,6 +37,8 @@ export class AuthService {
       tap((res) => {
         if (res.status === 'success') {
           localStorage.setItem('token', res.data.token);
+          localStorage.setItem('first_name', res.data.first_name);
+          localStorage.setItem('last_name', res.data.last_name);
           localStorage.setItem('email', res.data.email);
           localStorage.setItem('userId', res.data.id);
           localStorage.removeItem('pendingEmail');
@@ -72,19 +74,23 @@ export class AuthService {
   getCurrentUser(): any {
     const userId = localStorage.getItem('userId');
     const email = localStorage.getItem('email');
-    
+    const firstName = localStorage.getItem('first_name');
+    const lastName = localStorage.getItem('last_name');
+
     console.log('AuthService.getCurrentUser() - userId:', userId);
     console.log('AuthService.getCurrentUser() - email:', email);
-    
+
     if (userId && email) {
       const user = {
         id: userId,
-        email: email
+        email: email,
+        first_name: firstName,
+        last_name: lastName
       };
       console.log('AuthService.getCurrentUser() - usuario encontrado:', user);
       return user;
     }
-    
+
     console.log('AuthService.getCurrentUser() - no hay usuario autenticado');
     return null;
   }

@@ -6,6 +6,7 @@ import { GroupService } from '../../services/group.service';
 import { Groups } from '../../interfaces/groups';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
@@ -18,6 +19,7 @@ Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Too
 })
 export class TeacherAssistancePanelComponent implements OnInit, AfterViewInit {
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
+  userName: string = '';
   chart!: Chart;
   groups: TopAbsenceGroup[] = [];
   groups_data: Groups[] = [];
@@ -27,6 +29,7 @@ export class TeacherAssistancePanelComponent implements OnInit, AfterViewInit {
   FormSchedule: FormGroup;
 
   constructor(
+    private authService: AuthService,
     private graphicsService: GraphicsService,
     private groupService: GroupService,
   ) {
@@ -36,6 +39,10 @@ export class TeacherAssistancePanelComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userName = `${user.firstName} ${user.lastName}`;
+    }
     this.groupService.getAllGroups().subscribe({
       next: (response) => {
         this.groups_data = response.data;
