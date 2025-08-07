@@ -73,9 +73,9 @@ export class StudentsComponent implements OnInit {
     const traducciones: { [key: string]: string } = {
       'Middle_School': 'Secundaria',
       'High_School': 'Preparatoria',
-      'Primary': 'Primaria',
-      'Kinder': 'Kinder'
+      'Elementary_School': 'Primaria',
     };
     return traducciones[grade] || grade;
   }
+  
 }

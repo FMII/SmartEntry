@@ -12,12 +12,12 @@
                 <label for="search" class="sr-only">Buscar</label>
                 <div class="relative w-full">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <i class="ti ti-search text-lg text-"></i>
+                        <i class="ti ti-search text-lg"></i>
                     </div>
                     <input type="text" id="search" 
                         [(ngModel)]="searchTerm" 
                         (input)="onSearchChange($event)"
-                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
+                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-black focus:outline-none"
                         placeholder="Buscar por nombre, email o rol..." />
                 </div>
             </div>

@@ -10,10 +10,10 @@
                 <form [formGroup]="FormLog" (ngSubmit)="filtrarPorFechas()"
                     class="col-span-12 grid grid-cols-12 gap-4 items-center">
                     <!-- Salón -->
-                    <div class="col-span-3 flex flex-col">
+                    <div class="col-span-4 flex flex-col">
                         <label for="classroomId" class="sr-only">Salón</label>
                         <select formControlName="classroomId" (change)="onGroupChange($event)" id="classroomId"
-                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:ring-1 focus:ring-black focus:outline-none">
                             <option *ngFor="let room of classrooms" [value]="room.id">
                                 {{ room.name }}
                             </option>
@@ -24,14 +24,14 @@
                     <div class="col-span-2 flex flex-col">
                         <label for="fechaInicio" class="sr-only">Fecha inicio</label>
                         <input type="date" formControlName="fechaInicio" id="fechaInicio"
-                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:ring-1 focus:ring-black focus:outline-none" />
                     </div>
 
                     <!-- Fecha Fin -->
                     <div class="col-span-2 flex flex-col">
                         <label for="fechaFin" class="sr-only">Fecha fin</label>
                         <input type="date" formControlName="fechaFin" id="fechaFin"
-                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            class="min-w-[150px] border border-gray-300 rounded-md px-3 py-2 focus:ring-1 focus:ring-black focus:outline-none" />
                     </div>
 
                     <!-- Botón Filtrar -->
