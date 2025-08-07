@@ -50,15 +50,34 @@ export class SensorsComponent implements OnInit {
           const classroom = this.classrooms.find(c => c.id === sensor.classroom_id);
           return {
             ...sensor,
-            classroom_name: classroom ? classroom.name : 'Sin asignar'
+            classroom_name: classroom ? classroom.name : 'Sin asignar',
+            // ✅ Traduce el tipo de sensor al español
+            type: this.traducirTipoSensor(sensor.type)
           };
         });
         this.filteredSensors = [...this.sensors];
+        console.log(this.sensors);
       },
       error: (err) => {
         console.error('Error al cargar sensores', err);
       }
     });
+  }
+
+  // ✅ Función para traducir el tipo del sensor al español
+  traducirTipoSensor(tipo: string): string {
+    switch (tipo) {
+      case 'attendance':
+        return 'Asistencia';
+      case 'access':
+        return 'Acceso';
+      case 'work_entry':
+        return 'Entrada laboral';
+      case 'work_out':
+        return 'Salida laboral';
+      default:
+        return tipo;
+    }
   }
 
   onSearchChange(event: any) {
