@@ -38,9 +38,16 @@ export class GroupService {
   updateGroup(id: number, group: Group): Observable<any> {
     return this.http.put(`https://api.smartentry.space/api/academic/groups/${id}`, group);
   }
+  
+  
   getUsersByRole(): Observable<any> {
     return this.http.get('https://api.smartentry.space/api/academic/users/roles/3');
   }
+
+  getStudents(): Observable<any> {
+    return this.http.get('https://api.smartentry.space/api/academic/users/roles/3');
+  }
+
   assignGroupToStudent(payload: { student_id: number; group_id: number; academic_year: number }): Observable<any> {
     return this.http.post('https://api.smartentry.space/api/academic/student-groups/assign', payload);
   }
