@@ -109,7 +109,7 @@ export class UpdateSchedulesComponent {
       this.schedulesService.getAssignmentById(this.assignmentId).subscribe({
         next: (res) => {
           const data = res.data.teacherSubjectGroup;
-           console.log('Datos recibidos para patchValue:', data);
+           //console.log('Datos recibidos para patchValue:', data);
 
           // Espera unos milisegundos para asegurarse que los selects estén poblados
           setTimeout(() => {

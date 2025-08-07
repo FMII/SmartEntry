@@ -90,8 +90,8 @@ export class AuthService {
     const firstName = localStorage.getItem('first_name');
     const lastName = localStorage.getItem('last_name');
 
-    console.log('AuthService.getCurrentUser() - userId:', userId);
-    console.log('AuthService.getCurrentUser() - email:', email);
+    //console.log('AuthService.getCurrentUser() - userId:', userId);
+    //console.log('AuthService.getCurrentUser() - email:', email);
 
     if (userId && email) {
       const user = {
@@ -100,11 +100,11 @@ export class AuthService {
         first_name: firstName,
         last_name: lastName
       };
-      console.log('AuthService.getCurrentUser() - usuario encontrado:', user);
+      //console.log('AuthService.getCurrentUser() - usuario encontrado:', user);
       return user;
     }
 
-    console.log('AuthService.getCurrentUser() - no hay usuario autenticado');
+    //console.log('AuthService.getCurrentUser() - no hay usuario autenticado');
     return null;
   }
 

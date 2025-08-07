@@ -74,14 +74,14 @@ export class TeacherAssistancePanelComponent implements OnInit, AfterViewInit {
     });
 
     this.FormSchedule.get('grupoId')?.valueChanges.subscribe(value => {
-      console.log('Grupo seleccionado:', value);
+      //console.log('Grupo seleccionado:', value);
     });
   }
 
   onGroupChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedGroupId = Number(value);
-    console.log('Grupo seleccionado:', this.selectedGroupId);
+    //console.log('Grupo seleccionado:', this.selectedGroupId);
 
     // 👇 Traer asistencia filtrada por grupo
     this.graphicsService.getAttendanceByGroup(this.selectedGroupId).subscribe({

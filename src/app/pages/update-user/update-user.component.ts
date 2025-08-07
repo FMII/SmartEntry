@@ -12,6 +12,7 @@ import { UserRegisterService, User } from '../../services/user.service';
   styleUrl: './update-user.component.css'
 })
 export class UpdateUserComponent implements OnInit {
+  showPassword: boolean = false;
   registerForm: FormGroup;
   userId!: number;
   errorMessages: string[] = [];
@@ -40,40 +41,42 @@ export class UpdateUserComponent implements OnInit {
       password: ['', [this.passwordValidator]] // Campo opcional para nueva contraseña
     });
   }
-
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
   // Validador personalizado para la contraseña (solo valida si hay valor)
   passwordValidator(control: any) {
     if (!control.value) {
       return null; // Si está vacío, es válido (es opcional)
     }
-    
+
     const password = control.value;
-    
+
     // Validar longitud mínima de 8 caracteres
     if (password.length < 8) {
       return { passwordInvalid: 'La contraseña debe tener al menos 8 caracteres' };
     }
-    
+
     // Validar que contenga al menos una minúscula
     if (!/[a-z]/.test(password)) {
       return { passwordInvalid: 'La contraseña debe contener al menos una minúscula' };
     }
-    
+
     // Validar que contenga al menos una mayúscula
     if (!/[A-Z]/.test(password)) {
       return { passwordInvalid: 'La contraseña debe contener al menos una mayúscula' };
     }
-    
+
     // Validar que contenga al menos un número
     if (!/\d/.test(password)) {
       return { passwordInvalid: 'La contraseña debe contener al menos un número' };
     }
-    
+
     // Validar que contenga al menos un caracter especial
     if (!/[\W_]/.test(password)) {
       return { passwordInvalid: 'La contraseña debe contener al menos un caracter especial' };
     }
-    
+
     return null; // Contraseña válida
   }
 

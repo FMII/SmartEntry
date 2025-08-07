@@ -38,7 +38,7 @@ export class CreateSensorsComponent implements OnInit {
   ngOnInit() {
     this.classroomsService.getClassrooms().subscribe({
       next: (res) => {
-        console.log('Respuesta salones:', res); // Ver para depurar
+        //console.log('Respuesta salones:', res); // Ver para depurar
 
         // Caso 1: data es un array directamente
         if (Array.isArray(res.data)) {

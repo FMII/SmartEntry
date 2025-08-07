@@ -99,8 +99,14 @@
                 <label for="password" class="block text-sm font-medium mb-1">Contraseña</label>
                 <div class="relative">
                     <i class="ti ti-lock absolute text-xl p-2 text-[#0A0A0A]"></i>
-                    <input id="password" type="password" formControlName="password"
+                    <input id="password" [type]="showPassword ? 'text' : 'password'" id="password"
+                        formControlName="password"
                         class="w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black" />
+                    <!-- Botón de ojito -->
+                    <button type="button" (click)="showPassword = !showPassword"
+                        class="absolute inset-y-0 right-3 flex items-center text-black text-lg" tabindex="-1">
+                        <i [class]="showPassword ? 'ti ti-eye' : 'ti ti-eye-off'"></i>
+                    </button>
                 </div>
                 <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
                     class="text-[#DC3545] text-sm mt-1">

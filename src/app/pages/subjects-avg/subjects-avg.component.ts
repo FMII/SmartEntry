@@ -54,6 +54,6 @@ export class SubjectsAvgComponent implements OnInit {
   onGroupChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     this.selectedClassroomId = Number(value);
-    console.log('Grupo seleccionado:', this.selectedClassroomId);
+    //console.log('Grupo seleccionado:', this.selectedClassroomId);
   }
 }

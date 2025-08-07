@@ -12,6 +12,7 @@ import { UserRegisterService } from '../../services/user.service';
   styleUrl: './create-user.component.css'
 })
 export class CreateUserComponent implements OnInit {
+  showPassword = false;
   registerForm: FormGroup;
   loading = false;
   errorMessages: string[] = [];
