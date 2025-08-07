@@ -41,7 +41,7 @@ export class TeacherAssistancePanelComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
     if (user) {
-      this.userName = `${user.firstName} ${user.lastName}`;
+      this.userName = `${user.first_name} ${user.last_name}`;
     }
     this.groupService.getAllGroups().subscribe({
       next: (response) => {
