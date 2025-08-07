@@ -63,6 +63,7 @@ export class CreateSchedulesComponent {
       next: (response) => {
         this.schedules = response.data.schedules.map(sch => ({
           ...sch,
+          weekday: this.translateDay(sch.weekday),
           start_time: this.formatearHoraUTC(sch.start_time),
           end_time: this.formatearHoraUTC(sch.end_time)
         }));
@@ -129,6 +130,18 @@ export class CreateSchedulesComponent {
     return `${horas}:${minutos}:${segundos}`;
   }
 
+  translateDay(day: string): string {
+    const days: { [key: string]: string } = {
+      Monday: 'Lunes',
+      Tuesday: 'Martes',
+      Wednesday: 'Miércoles',
+      Thursday: 'Jueves',
+      Friday: 'Viernes',
+      Saturday: 'Sábado',
+      Sunday: 'Domingo',
+    };
+    return days[day] || day;
+  }
 
   onSubmit() {
     if (this.FormSchedule.valid) {

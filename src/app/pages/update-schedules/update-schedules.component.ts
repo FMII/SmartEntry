@@ -67,6 +67,7 @@ export class UpdateSchedulesComponent {
       next: (response) => {
         this.schedules = response.data.schedules.map(sch => ({
           ...sch,
+          weekday: this.translateDay(sch.weekday),
           start_time: this.formatearHoraUTC(sch.start_time),
           end_time: this.formatearHoraUTC(sch.end_time)
         }));
@@ -109,7 +110,7 @@ export class UpdateSchedulesComponent {
       this.schedulesService.getAssignmentById(this.assignmentId).subscribe({
         next: (res) => {
           const data = res.data.teacherSubjectGroup;
-           //console.log('Datos recibidos para patchValue:', data);
+          //console.log('Datos recibidos para patchValue:', data);
 
           // Espera unos milisegundos para asegurarse que los selects estén poblados
           setTimeout(() => {
@@ -154,6 +155,18 @@ export class UpdateSchedulesComponent {
     return `${horas}:${minutos}:${segundos}`;
   }
 
+  translateDay(day: string): string {
+    const days: { [key: string]: string } = {
+      Monday: 'Lunes',
+      Tuesday: 'Martes',
+      Wednesday: 'Miércoles',
+      Thursday: 'Jueves',
+      Friday: 'Viernes',
+      Saturday: 'Sábado',
+      Sunday: 'Domingo',
+    };
+    return days[day] || day;
+  }
   onSubmit() {
     if (this.FormSchedule.valid && this.assignmentId) {
       const payload = {
