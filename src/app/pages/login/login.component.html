@@ -29,27 +29,35 @@
         <input type="email" id="email" formControlName="email" placeholder="Ingresa tu correo"
           class="text-xs w-full px-4 py-3 bg-[#FAFAFA] rounded-full focus:outline-none focus:ring-1 focus:ring-black" />
       </div>
-
       <!-- Contraseña -->
       <div>
         <label for="password" class="block text-xs font-medium mb-4">Contraseña</label>
-        <input type="password" id="password" formControlName="password" placeholder="Ingresa tu contraseña"
-          class="text-xs w-full px-4 py-3 bg-[#FAFAFA] rounded-full focus:outline-none focus:ring-1 focus:ring-black" />
+        <div class="relative">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+            placeholder="Ingresa tu contraseña" class="text-xs w-full px-4 py-3 bg-[#FAFAFA] rounded-full focus:outline-none focus:ring-1 focus:ring-black
+          pr-10" />
+          <!-- Botón de ojito -->
+          <button type="button" (click)="showPassword = !showPassword"
+            class="absolute inset-y-0 right-3 flex items-center text-black text-lg" tabindex="-1">
+            <i [class]="showPassword ? 'ti ti-eye' : 'ti ti-eye-off'"></i>
+          </button>
+        </div>
       </div>
+
       <!-- Botón -->
       <button type="submit" [disabled]="loginForm.invalid"
         class="w-full bg-[#262626] text-xs text-white py-3 rounded-full hover:bg-black transition-colors duration-300 disabled:opacity-50">
         Inicia sesión
       </button>
     </form>
-    
+
     <!-- Enlace para olvidé mi contraseña -->
     <div class="text-center mt-4">
       <a routerLink="/forgot-password" class="text-xs text-[#525252] hover:text-black transition-colors">
         ¿Olvidaste tu contraseña?
       </a>
     </div>
-    
+
     <p class="text-xs text-center text-[#525252] mt-6">
       Esta plataforma está reservada para usuarios autorizados
     </p>

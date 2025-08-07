@@ -18,7 +18,7 @@ export class StudentsComponent implements OnInit {
   groupName: string = '';
   groupGrade: string = '';
 
-  constructor(private groupService: GroupService) {}
+  constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
     this.loadGroups();
@@ -29,6 +29,12 @@ export class StudentsComponent implements OnInit {
       next: (res) => {
         if (res.status === 'success') {
           this.groups = res.data;
+
+          // 👉 Seleccionar automáticamente el primer grupo
+          if (this.groups.length > 0) {
+            this.selectedGroupId = this.groups[0].id; // selecciona el primero
+            this.onGroupChange(); // carga estudiantes del primer grupo
+          }
         }
       },
       error: (err) => {
@@ -36,6 +42,7 @@ export class StudentsComponent implements OnInit {
       }
     });
   }
+
 
   onGroupChange(): void {
     if (!this.selectedGroupId) return;

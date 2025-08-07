@@ -12,6 +12,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  showPassword = false;
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
