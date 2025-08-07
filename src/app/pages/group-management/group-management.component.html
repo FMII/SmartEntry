@@ -2,21 +2,28 @@
     <h1 class="text-lg font-medium">Grupos</h1>
 </header>
 <div class="p-6">
-    <div class="bg-white w-full h-full rounded-2xl shadow flex flex-col">
-        <!-- Boton para buscar materia-->
-        <div class="p-4 flex justify-between items-center">
-            <select class="block w-auto min-w-[9rem] p-3 text-sm border border-[#E8E8E8] rounded-lg" name="grado">
-                <option selected disabled>Grado</option>
-                <option value="1">Primaria</option>
-                <option value="2">Secundaria</option>
-                <option value="3">Preparatoria</option>
-            </select>
-
-            <a routerLink="/groups/create"
-                class="bg-[#262626] text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-black transition">
-                Agregar Grupo
-            </a>
-
+    <div class="bg-white w-full h-full rounded-2xl 6 shadow flex flex-col">
+        <!-- Encabezado: búsqueda + botón -->
+        <div class="flex items-center p-4 gap-4 mb-4">
+            <!-- Buscador que ocupa todo el ancho disponible -->
+            <div class="flex items-center flex-1">
+                <label for="search" class="sr-only">Buscar</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="ti ti-search text-lg text-"></i>
+                    </div>
+                    <input type="text" id="search" [(ngModel)]="searchTerm" (input)="onSearchChange($event)"
+                        class="block w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg"
+                        placeholder="Buscar por grupo o grado escolar..." />
+                </div>
+            </div>
+            <!-- Agregar Usuario -->
+            <div>
+                <a [routerLink]="['/groups/create']"
+                    class="block text-white bg-[#262626] font-medium rounded-lg text-sm px-4 py-2 text-center hover:bg-black">
+                    Agregar Grupo
+                </a>
+            </div>
         </div>
 
         <!-- Línea debajo -->
@@ -36,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let group of groups" class="bg-white border-b border-gray-200">
+                            <tr *ngFor="let group of filteredGroups" class="bg-white border-b border-gray-200">
                                 <td class="px-6 py-4">{{ group.id }}</td>
                                 <td class="px-6 py-4">{{ group.name }}</td>
                                 <td class="px-6 py-4">
@@ -54,6 +61,9 @@
                                     </a>
 
                                 </td>
+                            </tr>
+                            <tr *ngIf="filteredGroups.length === 0 && groups.length > 0">
+                                <td colspan="7" class="px-6 py-4 text-center text-gray-500">No se encontraron grupos que coincidan con la búsqueda.</td>
                             </tr>
                             <tr *ngIf="groups.length === 0">
                                 <td colspan="5" class="text-center py-4 text-gray-500">No hay grupos para mostrar.</td>
