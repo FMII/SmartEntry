@@ -55,4 +55,8 @@ export class GroupService {
     return this.http.get(`https://api.smartentry.space/api/academic/student-groups/${groupId}/students`);
   }
 
+  removeStudentFromGroup(studentId: number, groupId: number, academicYear: number): Observable<any> {
+    return this.http.delete(`https://api.smartentry.space/api/academic/student-groups/${studentId}/${groupId}/${academicYear}`);
+  }
+
 }

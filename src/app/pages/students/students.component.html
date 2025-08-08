@@ -16,6 +16,15 @@
 
         <!-- Línea debajo -->
         <div class="w-full border-b" style="border-color: #E8E8E8;"></div>
+
+        <!-- Mensajes de estado -->
+        <div *ngIf="message" class="px-6">
+            <div [class]="messageType === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700'" 
+                 class="px-4 py-3 rounded relative border">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        </div>
+
         <!-- TABLA -->
         <div class="w-full p-6">
             <div class="mt-4 relative shadow-md sm:rounded-lg rounded-lg">
@@ -30,11 +39,12 @@
                                 <th scope="col" class="px-6 py-3">Grupo</th>
                                 <th scope="col" class="px-6 py-3">Grado</th>
                                 <th scope="col" class="px-6 py-3">Año</th>
+                                <th scope="col" class="px-6 py-3">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngIf="students.length === 0">
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500">No hay alumnos en este grupo.
+                                <td colspan="7" class="px-6 py-4 text-center text-gray-500">No hay alumnos en este grupo.
                                 </td>
                             </tr>
                             <tr *ngFor="let student of students" class="bg-white border-b border-gray-200">
@@ -44,6 +54,16 @@
                                 <td class="px-6 py-4">{{ groupName }}</td>
                                 <td class="px-6 py-4">{{ translateGrade(groupGrade) }}</td>
                                 <td class="px-6 py-4">{{ student.academic_year }}</td>
+                                <td class="px-6 py-4">
+                                    <button
+                                        (click)="removeStudent(student)"
+                                        [disabled]="loading || deletingStudentId === student.student_id"
+                                        class="bg-[#3e5e7eb] hover:bg-[#2d4a5a] disabled:bg-[#5e7e9b] text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-200"
+                                        title="Eliminar del grupo">
+                                        <span *ngIf="deletingStudentId === student.student_id">Eliminando...</span>
+                                        <span *ngIf="deletingStudentId !== student.student_id">🗑️</span>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

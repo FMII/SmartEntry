@@ -18,6 +18,12 @@ export class StudentsComponent implements OnInit {
   groupName: string = '';
   groupGrade: string = '';
 
+  // Propiedades para el botón de eliminar
+  message: string = '';
+  messageType: 'success' | 'error' = 'success';
+  loading: boolean = false;
+  deletingStudentId: number | null = null;
+
   constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
@@ -76,6 +82,50 @@ export class StudentsComponent implements OnInit {
       'Elementary_School': 'Primaria',
     };
     return traducciones[grade] || grade;
+  }
+
+  // Métodos para el botón de eliminar
+  removeStudent(student: any): void {
+    if (!this.selectedGroupId) return;
+
+    if (confirm(`¿Estás seguro de que quieres eliminar a ${student.first_name} ${student.last_name} del grupo ${this.groupName}?`)) {
+      this.deletingStudentId = student.student_id;
+      this.loading = true;
+      this.clearMessage();
+
+      this.groupService.removeStudentFromGroup(
+        student.student_id,
+        this.selectedGroupId,
+        student.academic_year
+      ).subscribe({
+        next: (res) => {
+          if (res.status === 'success') {
+            this.showMessage(res.msg[0], 'success');
+            this.onGroupChange(); // Recargar la lista
+          } else {
+            this.showMessage('Error al eliminar el estudiante del grupo', 'error');
+          }
+        },
+        error: (err) => {
+          const errorMsg = err.error?.msg?.[0] || 'Error al eliminar el estudiante del grupo';
+          this.showMessage(errorMsg, 'error');
+        },
+        complete: () => {
+          this.loading = false;
+          this.deletingStudentId = null;
+        }
+      });
+    }
+  }
+
+  showMessage(message: string, type: 'success' | 'error'): void {
+    this.message = message;
+    this.messageType = type;
+    setTimeout(() => this.clearMessage(), 5000); // Auto-ocultar después de 5 segundos
+  }
+
+  clearMessage(): void {
+    this.message = '';
   }
   
 }
