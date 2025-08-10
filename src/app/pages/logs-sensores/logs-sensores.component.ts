@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
 import { SensorLogsService, UserInfo, ClassroomInfo } from '../../services/sensor-logs.service';
 import { SensorLogEntry, SensorLogDisplay } from '../../interfaces/sensor-log';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription, interval } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-logs-sensores',
-  templateUrl: './logs-sensores.component.html',
-  styleUrls: ['./logs-sensores.component.css'],
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule, ReactiveFormsModule]
+  imports: [NgIf, NgFor, CommonModule, ReactiveFormsModule],
+  templateUrl: './logs-sensores.component.html',
+  styleUrls: ['./logs-sensores.component.css']
 })
-export class LogsSensoresComponent implements OnInit {
+export class LogsSensoresComponent implements OnInit, OnDestroy {
   sensorLogs: SensorLogEntry[] = [];
   sensorLogsDisplay: SensorLogDisplay[] = [];
   filterForm: FormGroup;
   isLoading = false;
   isLoadingDetails = false;
-
-  // Mapas para almacenar información de usuarios y salones
   usersMap = new Map<number, UserInfo>();
   classroomsMap = new Map<number, ClassroomInfo>();
+  
+  // Propiedades para el polling
+  isPollingActive = true;
+  pollingInterval = 30000; // 30 segundos
+  lastUpdateTime: Date | null = null;
+  private pollingSubscription: Subscription | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -35,38 +40,100 @@ export class LogsSensoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerLogsSensores();
+    this.iniciarPolling();
   }
 
-  obtenerLogsSensores() {
-    this.isLoading = true;
+  ngOnDestroy(): void {
+    this.detenerPolling();
+  }
+
+  // Método para iniciar el polling automático
+  iniciarPolling() {
+    if (this.pollingSubscription) {
+      this.detenerPolling();
+    }
+
+    this.pollingSubscription = interval(this.pollingInterval)
+      .pipe(
+        takeWhile(() => this.isPollingActive)
+      )
+      .subscribe(() => {
+        console.log('Polling automático: Actualizando logs...');
+        this.obtenerLogsSensores(true); // true = es actualización automática
+      });
+  }
+
+  // Método para detener el polling
+  detenerPolling() {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+      this.pollingSubscription = null;
+    }
+  }
+
+  // Método para alternar el polling
+  alternarPolling() {
+    this.isPollingActive = !this.isPollingActive;
+    
+    if (this.isPollingActive) {
+      this.iniciarPolling();
+      console.log('Polling activado');
+    } else {
+      this.detenerPolling();
+      console.log('Polling pausado');
+    }
+  }
+
+  obtenerLogsSensores(esActualizacionAutomatica = false) {
+    if (!esActualizacionAutomatica) {
+      this.isLoading = true;
+    }
+    
     const fechaInicio = this.filterForm.get('fechaInicio')?.value;
     const fechaFin = this.filterForm.get('fechaFin')?.value;
 
     this.sensorLogsService.getSensorLogs(fechaInicio, fechaFin).subscribe({
       next: (res) => {
-        console.log('Respuesta completa de la API:', res);
-        console.log('Datos de logs:', res.data);
-        if (res.data && res.data.length > 0) {
-          console.log('Primer log:', res.data[0]);
-          console.log('Propiedades del primer log:', Object.keys(res.data[0]));
-          // Log detallado del primer elemento
-          console.log('Primer log expandido:', JSON.stringify(res.data[0], null, 2));
-          // Ver qué hay en response y sensors
-          if (res.data[0].response) {
-            console.log('Estructura de response:', JSON.stringify(res.data[0].response, null, 2));
+        if (!esActualizacionAutomatica) {
+          console.log('Respuesta completa de la API:', res);
+          console.log('Datos de logs:', res.data);
+          if (res.data && res.data.length > 0) {
+            console.log('Primer log:', res.data[0]);
+            console.log('Propiedades del primer log:', Object.keys(res.data[0]));
+            console.log('Primer log expandido:', JSON.stringify(res.data[0], null, 2));
+            if (res.data[0].response) {
+              console.log('Estructura de response:', JSON.stringify(res.data[0].response, null, 2));
+            }
+            if (res.data[0].sensors) {
+              console.log('Estructura de sensors:', JSON.stringify(res.data[0].sensors, null, 2));
+            }
           }
-          if (res.data[0].sensors) {
-            console.log('Estructura de sensors:', JSON.stringify(res.data[0].sensors, null, 2));
+        } else {
+          console.log('Actualización automática completada');
+        }
+        
+        this.sensorLogs = res.data;
+        this.lastUpdateTime = new Date();
+        
+        if (!esActualizacionAutomatica) {
+          this.obtenerInformacionDetallada();
+        } else {
+          // Para actualizaciones automáticas, solo actualizar si ya tenemos la información de usuarios/salones
+          if (this.usersMap.size > 0 && this.classroomsMap.size > 0) {
+            this.mapearDatosParaTabla();
+          } else {
+            this.obtenerInformacionDetallada();
           }
         }
-        this.sensorLogs = res.data;
-        this.obtenerInformacionDetallada();
+        
         this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al obtener los logs de sensores:', err);
-        this.sensorLogs = [];
-        this.sensorLogsDisplay = [];
+        if (!esActualizacionAutomatica) {
+          this.sensorLogs = [];
+          this.sensorLogsDisplay = [];
+        }
         this.isLoading = false;
       }
     });
@@ -74,8 +141,6 @@ export class LogsSensoresComponent implements OnInit {
 
   obtenerInformacionDetallada() {
     this.isLoadingDetails = true;
-    
-    // Extraer todos los IDs únicos de usuarios y salones
     const userIds: number[] = [];
     const classroomIds: number[] = [];
 
@@ -94,7 +159,6 @@ export class LogsSensoresComponent implements OnInit {
     console.log('IDs de usuarios encontrados:', userIds);
     console.log('IDs de salones encontrados:', classroomIds);
 
-    // Obtener información de usuarios y salones en paralelo
     const userRequest = this.sensorLogsService.getUsersInfo(userIds);
     const classroomRequest = this.sensorLogsService.getClassroomsInfo(classroomIds);
 
@@ -119,7 +183,6 @@ export class LogsSensoresComponent implements OnInit {
           url: err.url
         });
         this.isLoadingDetails = false;
-        // Mapear datos sin información detallada
         this.mapearDatosParaTabla();
       }
     });
@@ -165,7 +228,6 @@ export class LogsSensoresComponent implements OnInit {
   }
 
   obtenerNombreSalon(log: SensorLogEntry): string {
-    // Intentar obtener el classroom_id del accessLog
     if (log.response.data.accessLog && log.response.data.accessLog.classroom_id) {
       const classroomId = log.response.data.accessLog.classroom_id;
       const classroomInfo = this.classroomsMap.get(classroomId);
@@ -174,7 +236,6 @@ export class LogsSensoresComponent implements OnInit {
       }
       return `Salón ${classroomId}`;
     }
-    
     return '-';
   }
 
@@ -183,7 +244,6 @@ export class LogsSensoresComponent implements OnInit {
   }
 
   formatearFechaLocal(fechaStr: string): string {
-    // Verificar si la fecha es válida
     if (!fechaStr || fechaStr === 'undefined' || fechaStr === 'null') {
       return 'Fecha no disponible';
     }
@@ -211,5 +271,18 @@ export class LogsSensoresComponent implements OnInit {
   limpiarFiltros() {
     this.filterForm.reset();
     this.obtenerLogsSensores();
+  }
+
+  // Método para formatear la hora de última actualización
+  obtenerHoraUltimaActualizacion(): string {
+    if (!this.lastUpdateTime) return 'Nunca';
+    
+    const ahora = new Date();
+    const diffMs = ahora.getTime() - this.lastUpdateTime.getTime();
+    const diffSegs = Math.floor(diffMs / 1000);
+    
+    if (diffSegs < 60) return `Hace ${diffSegs} segundos`;
+    if (diffSegs < 3600) return `Hace ${Math.floor(diffSegs / 60)} minutos`;
+    return `Hace ${Math.floor(diffSegs / 3600)} horas`;
   }
 }
