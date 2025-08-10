@@ -33,7 +33,7 @@
                                 {{ item.lowest_subject?.subject_name || 'Sin datos' }}
                             </td>
                             <td class="px-6 py-3">
-                                {{ item.lowest_subject?.average || '-' }}
+                                {{ item.lowest_subject?.average ? (item.lowest_subject?.average | number:'1.2-2') : '-' }}
                             </td>
                         </tr>
                     </tbody>
