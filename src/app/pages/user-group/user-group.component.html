@@ -6,9 +6,9 @@
         <div class="p-4 flex justify-between items-center">
             <select class="block w-auto min-w-[9rem] p-3 text-sm border border-[#E8E8E8] rounded-lg" name="grado">
                 <option selected disabled>Grupo</option>
-                <option value="1">6-A</option>
-                <option value="2">6-B</option>
-                <option value="3">6-C</option>
+                <option *ngFor="let group of groups" [value]="group.id">
+                    {{ group.name }}
+                </option>
             </select>
         </div>
 

@@ -36,6 +36,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { LogsSensoresComponent } from './pages/logs-sensores/logs-sensores.component';
 import { SubjectsAvgComponent } from './pages/subjects-avg/subjects-avg.component';
 
 export const routes: Routes = [
@@ -59,6 +60,7 @@ export const routes: Routes = [
       { path: 'rfid-cards', component: RfidCardsComponent },
       { path: 'sensors', component: SensorsComponent },
       { path: 'logs', component: LogsComponent, canActivate: [adminGuard] },
+      { path: 'logs-sensores', component: LogsSensoresComponent, canActivate: [adminGuard] },
       { path: 'subjects-avg', component: SubjectsAvgComponent, canActivate: [adminGuard] },
 
       { path: 'schedules/edit/:id', component: UpdateSchedulesComponent },
