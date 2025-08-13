@@ -11,7 +11,8 @@ export interface GroupSubjectAvg {
 }
 
 export interface SubjectAvg {
-  subject_id: number;
-  subject_name: string;
-  average: number;
+  subject_id?: number;
+  subject_name?: string;
+  average?: number;
 }
+

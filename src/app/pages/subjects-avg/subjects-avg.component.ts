@@ -33,7 +33,18 @@ export class SubjectsAvgComponent implements OnInit {
   ngOnInit(): void {
     this.subjectsAvgService.getSubjectsAverage().subscribe({
       next: (response) => {
-        this.subjectsAvg = response.data;
+        this.subjectsAvg = response.data.map(group => {
+          const avg = group.lowest_subject?.average;
+
+          return {
+            ...group,
+            lowest_subject: {
+              ...group.lowest_subject,
+              average: avg != null ? Number(avg.toFixed(2)) : avg
+            }
+          };
+        });
+
         this.isLoading = false;
       },
       error: (error) => {
