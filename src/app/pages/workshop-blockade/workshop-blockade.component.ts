@@ -16,8 +16,16 @@ export class WorkshopBlockadeComponent implements OnInit {
   classrooms: any[] = [];
   filteredClassrooms: any[] = [];
   searchTerm: string = '';
+  showModal = false;
+  showSuccessToast = false;
+  successMessage = '';
 
-  constructor(private classroomsService: ClassroomsService) {}
+  openDropdownId: number | null = null;
+  selectedClassroomId: number | null = null;
+  editClassroomName: string = '';
+  editClassroomBlocked: boolean = false;
+
+  constructor(private classroomsService: ClassroomsService) { }
 
   ngOnInit(): void {
     this.classroomsService.getClassrooms().subscribe({
@@ -40,9 +48,57 @@ export class WorkshopBlockadeComponent implements OnInit {
       this.filteredClassrooms = [...this.classrooms];
     } else {
       const search = this.searchTerm.toLowerCase().trim();
-      this.filteredClassrooms = this.classrooms.filter(classroom => 
+      this.filteredClassrooms = this.classrooms.filter(classroom =>
         classroom.name && classroom.name.toLowerCase().includes(search)
       );
+    }
+  }
+
+  toggleDropdown(id: number): void {
+    this.openDropdownId = this.openDropdownId === id ? null : id;
+  }
+
+  openEditModal(classroom: any): void {
+    this.selectedClassroomId = classroom.id;
+    this.editClassroomName = classroom.name;
+    this.editClassroomBlocked = classroom.is_blocked;
+    this.showModal = true;
+    this.openDropdownId = null;
+  }
+
+  cancelUpdate(): void {
+    this.showModal = false;
+    this.selectedClassroomId = null;
+  }
+
+  saveClassroom(): void {
+    if (this.selectedClassroomId !== null) {
+      this.classroomsService.updateClassroomStatus(
+        this.selectedClassroomId,
+        this.editClassroomBlocked,
+        this.editClassroomName
+      ).subscribe({
+        next: (res: any) => {
+          // Actualiza el estado localmente
+          const idx = this.classrooms.findIndex(c => c.id === this.selectedClassroomId);
+          if (idx !== -1) {
+            this.classrooms[idx].is_blocked = this.editClassroomBlocked;
+            this.classrooms[idx].name = this.editClassroomName;
+          }
+          this.filterClassrooms();
+          this.showModal = false;
+          this.selectedClassroomId = null;
+          this.successMessage = res.msg && res.msg[0] ? res.msg[0] : 'Aula actualizada exitosamente';
+          this.showSuccessToast = true;
+          setTimeout(() => {
+            this.showSuccessToast = false;
+            this.successMessage = '';
+          }, 3000);
+        },
+        error: (err) => {
+          console.error('Error al actualizar aula:', err);
+        }
+      });
     }
   }
 }

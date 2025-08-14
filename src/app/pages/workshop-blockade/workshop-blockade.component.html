@@ -6,7 +6,22 @@
 <!-- Contenido principal -->
 <div class="p-6">
     <div class="bg-white w-full h-full rounded-2xl shadow p-6 flex flex-col">
-
+        <!-- Toast de éxito -->
+        <div *ngIf="showSuccessToast"
+            class="fixed top-6 right-6 bg-green-50 border border-[#28A745] text-[#28A745] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+            <div class="flex items-start gap-3 p-4">
+                <div class="flex-shrink-0 bg-green-100 rounded-full p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#28A745]" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">Éxito</p>
+                    <p class="text-sm">{{ successMessage }}</p>
+                </div>
+            </div>
+        </div>
         <!-- Encabezado: búsqueda + botón -->
         <div class="flex items-center gap-4 mb-4">
 
@@ -29,7 +44,7 @@
             <!-- Botón Agregar Salón -->
             <a [routerLink]="['/classrooms/create']" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                 class="bg-[#262626] hover:bg-black text-white text-sm font-medium px-4 py-2 rounded-lg text-center transition-colors">
-                Agregar Salón
+                Agregar salón
             </a>
         </div>
 
@@ -38,42 +53,90 @@
 
         <!-- Contenedor de cards -->
         <div class="overflow-y-auto max-h-[475px] rounded-lg">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div *ngFor="let classroom of filteredClassrooms"
-                    class="bg-white shadow-sm border border-slate-200 rounded-xl w-full" style="overflow: hidden;">
-                    <!-- Header -->
-                    <div class="border-b bg-[#FAFAFA] border-slate-200 pt-3 pb-2 px-4">
-                        <div
-                            class="w-6 h-6 rounded-full bg-white border border-[#E8E8E8] text-[#000000] flex items-center justify-center text-xs font-semibold">
-                            {{ classroom.id }}
-                        </div>
-                    </div>
+            <div class="grid grid-cols-4 gap-4 p-2">
+                <div *ngFor="let classroom of filteredClassrooms">
+                    <div class="border border-[#E8E8E8] rounded-lg p-6">
+                        <div class="flex flex-col items-center justify-center h-full">
 
-                    <!-- Contenido -->
-                    <div class="grid grid-cols-2 gap-4 px-4 py-4 items-center">
-                        <div>
-                            <h2 class="font-medium text-lg mb-3"><i class="ti ti-buildings"></i> Aula</h2>
-                            <p class="text-sm">{{ classroom.name }}</p>
-                        </div>
-                        <div class="flex justify-end">
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer" [checked]="!classroom.is_blocked" disabled>
-                                <div class="w-11 h-6 rounded-full transition-colors duration-300" [ngClass]="{
-                'bg-gray-300': classroom.is_blocked,
-                'bg-blue-600': !classroom.is_blocked
-              }">
+                            <!-- Contenedor del botón y dropdown -->
+                            <div class="flex justify-between items-center mb-6 w-full max-w-xs relative">
+                                <span class="bg-black text-white text-xs px-4 py-1 rounded-2xl">Aula</span>
+                                <button
+                                    class="px-4 py-1 border border-[#E8E8E8] rounded-2xl flex items-center justify-center text-black"
+                                    type="button" (click)="toggleDropdown(classroom.id)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="icon icon-tabler icon-tabler-dots">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                        <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    </svg>
+                                </button>
+
+                                <!-- Dropdown -->
+                                <div *ngIf="openDropdownId === classroom.id"
+                                    class="absolute top-full right-0 mt-2 z-10 bg-white divide-y divide-gray-100 rounded-xl shadow-sm w-44 border border-[#E8E8E8]">
+                                    <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <button class="block px-4 py-2 text-left w-full hover:text-[#FFC107]"
+                                                (click)="openEditModal(classroom)">
+                                                Editar aula
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300"
-                                    [ngClass]="{
-                'translate-x-0': classroom.is_blocked,
-                'translate-x-5': !classroom.is_blocked
-              }">
-                                </div>
-                            </label>
+                            </div>
+
+                            <!-- Info del aula -->
+                            <div class="flex justify-between items-center w-full max-w-xs">
+                                <div class="text-xs font-medium">{{ classroom.name }}</div>
+                                <span *ngIf="classroom.is_blocked"
+                                    class="border border-[#DC3545] text-[#DC3545] bg-red-50 px-5 py-1 rounded-3xl text-xs">
+                                    Block
+                                </span>
+                                <span *ngIf="!classroom.is_blocked"
+                                    class="border border-[#28A745] text-[#28A745] bg-green-50 px-5 py-1 rounded-3xl text-xs">
+                                    Open
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
+</div>
+<!-- Modal de edición -->
+<div *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white rounded-lg p-6 shadow-lg w-full max-w-sm">
+        <h3 class="text-lg font-medium mb-4">Editar aula</h3>
+        <form (ngSubmit)="saveClassroom()">
+            <div class="mb-5">
+                <label class="block text-sm font-medium mb-1">Nombre del aula</label>
+                <input type="text" [(ngModel)]="editClassroomName" name="editClassroomName"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-black focus:outline-none"
+                    required />
+            </div>
+            <div class="mb-6 flex items-center gap-1">
+                <input type="checkbox" id="is_blocked" [(ngModel)]="editClassroomBlocked" name="editClassroomBlocked"
+                    class="w-4 h-4 text-black accent-black border-2 border-black rounded-sm" />
+                <span class="ml-3" [ngClass]="editClassroomBlocked ? 'text-[#DC3545]' : 'text-[#28A745]'">
+                    {{ editClassroomBlocked ? 'Aula bloqueada' : 'Aula desbloqueada' }}
+                </span>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" (click)="cancelUpdate()"
+                    class="bg-[#262626] text-white px-6 py-2 rounded-lg font-medium text-sm hover:bg-black transition">
+                    Cancelar
+                </button>
+                <button type="submit"
+                    class="bg-[#262626] text-white px-6 py-2 rounded-lg font-medium text-sm transition">
+                    Guardar
+                </button>
+            </div>
+        </form>
     </div>
 </div>

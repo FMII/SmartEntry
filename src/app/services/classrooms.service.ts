@@ -27,8 +27,9 @@ export class ClassroomsService {
     return this.http.post(`${this.baseUrl}/create`, data);
   }
 
-  updateClassroomStatus(id: number, isBlocked: boolean) {
-    return this.http.patch(`https://api.smartentry.space/api/academic/classrooms/${id}`, {
+  updateClassroomStatus(id: number, isBlocked: boolean, name: string) {
+    return this.http.put(`https://api.smartentry.space/api/academic/classrooms/${id}`, {
+      name: name,
       is_blocked: isBlocked
     });
   }
