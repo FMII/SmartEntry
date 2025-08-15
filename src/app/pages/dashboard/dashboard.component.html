@@ -54,7 +54,8 @@
                         <a href="/group-management" class="block px-2 py-1 rounded-lg hover:text-[#525252]">Grupos</a>
                         <a href="/user-group" class="block px-2 py-1 rounded-lg hover:text-[#525252]">Asignación de
                             grupos</a>
-                        <a *ngIf="isAdmin" href="/subjects-avg" class="block px-2 py-1 rounded-lg hover:text-[#525252]">Promedio materias</a>
+                        <a *ngIf="isAdmin" href="/subjects-avg"
+                            class="block px-2 py-1 rounded-lg hover:text-[#525252]">Promedio materias</a>
                     </div>
                 </div>
                 <a href="/schedules" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
@@ -73,11 +74,17 @@
                     <i class="ti ti-access-point text-lg"></i>
                     <span class="ms-3">Gestión de tarjetas RFID</span>
                 </a>
+                <a *ngIf="isAdmin" href="/restrictions"
+                    class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                    <i class="ti ti-fingerprint-off text-lg"></i>
+                    <span class="ms-3">Restricciones</span>
+                </a>
                 <a *ngIf="isAdmin" href="/logs" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
                     <i class="ti ti-device-cctv text-lg"></i>
                     <span class="ms-3">Logs</span>
                 </a>
-                <a *ngIf="isAdmin" href="/logs-sensores" class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
+                <a *ngIf="isAdmin" href="/logs-sensores"
+                    class="flex items-center p-2 rounded-lg hover:text-[#525252] group">
                     <i class="ti ti-activity text-lg"></i>
                     <span class="ms-3">Logs de Sensores</span>
                 </a>
