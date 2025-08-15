@@ -34,11 +34,12 @@
                                 <td class="px-6 py-4">{{ student.first_name }}</td>
                                 <td class="px-6 py-4">{{ student.last_name }}</td>
                                 <td class="px-6 py-4">
-                                    <a [routerLink]="['/groups/assign', student.id]"
-                                        class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black transition">
+                                    <button type="button"
+                                        class="inline-flex items-center gap-2 bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black transition"
+                                        (click)="openModal = true; activeStudentId = student.id">
                                         <i class="ti ti-edit text-base"></i>
                                         Asignar Grupo
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -48,5 +49,80 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<div *ngIf="openModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    (click)="closeModal()">
+
+    <!-- Toast de error -->
+    <div *ngIf="errorMessages.length > 0"
+        class="fixed top-6 right-6 bg-red-50 border border-[#DC3545] text-[#DC3545] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+        <div class="flex items-start gap-3 p-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <i class="ti ti-x text-2xl text-red-600"></i>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">Error</p>
+                <ul class="text-sm list-disc ps-4">
+                    <li *ngFor="let err of errorMessages">{{ err }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de éxito -->
+    <div *ngIf="successMessage"
+        class="fixed top-6 right-6 bg-green-50 border border-[#28A745] text-[#28A745] rounded-xl shadow-lg w-full max-w-sm z-50 animate-fade-in-up">
+        <div class="flex items-start gap-3 p-4">
+            <div class="flex-shrink-0 bg-green-100 rounded-full p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">Éxito</p>
+                <p class="text-sm">{{ successMessage }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl" (click)="$event.stopPropagation()">
+        <div class="grid grid-cols-1 border-b border-[#E8E8E8]">
+            <div class="px-4 py-3">
+                <div class="flex justify-start align-middle items-center gap-2">
+                    <i class="ti ti-edit text-xl"></i>
+                    <p class="m-0 font-semibold text-base">Asigna un grupo al estudiante</p>
+                </div>
+            </div>
+        </div>
+        <form class="p-5" [formGroup]="assignForm" (ngSubmit)="onSubmit()">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mb-5">
+                    <label for="group_id" class="block mb-2 text-sm font-medium text-gray-900">Selecciona un
+                        grupo</label>
+                    <select id="group_id" class="block p-2 w-full text-sm border border-[#E8E8E8] rounded-lg"
+                        formControlName="group_id" required>
+                        <option value="" disabled selected>Grupo</option>
+                        <option *ngFor="let group of groups" [value]="group.id">
+                            {{ group.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-8">
+                    <label for="academic_year" class="block mb-2 text-sm font-medium text-gray-900">Año
+                        académico</label>
+                    <input type="number" id="academic_year" formControlName="academic_year" placeholder="Ej. 2025"
+                        class="w-full p-2 border rounded-lg" required />
+                </div>
+            </div>
+            <div class="grid grid-cols-1">
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="p-2 bg-red-600 hover:bg-red-500 text-white rounded-lg"
+                        (click)="closeModal()">Cancelar</button>
+                    <button type="submit" class="p-2 bg-[#262626] hover:bg-black text-white rounded-lg">Guardar</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

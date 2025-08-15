@@ -83,10 +83,10 @@ export class AssignGroupComponent implements OnInit {
         this.successMessage = '';
         if (err.error?.msg) {
           this.errorMessages = Array.isArray(err.error.msg) ? err.error.msg : [err.error.msg];
-          
+
           setTimeout(() => {
-          this.errorMessages = [];
-        }, 3000);
+            this.errorMessages = [];
+          }, 3000);
         } else {
           this.errorMessages = ['Error en el servidor. Intenta más tarde.'];
         }

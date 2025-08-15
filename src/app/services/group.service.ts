@@ -26,7 +26,7 @@ export class GroupService {
   getGroups(): Observable<any> {
     return this.http.get(this.listUrl);
   }
-  
+
   getAllGroups(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.listUrl);
   }
@@ -38,8 +38,7 @@ export class GroupService {
   updateGroup(id: number, group: Group): Observable<any> {
     return this.http.put(`https://api.smartentry.space/api/academic/groups/${id}`, group);
   }
-  
-  
+
   getUsersByRole(): Observable<any> {
     return this.http.get('https://api.smartentry.space/api/academic/users/roles/3');
   }
