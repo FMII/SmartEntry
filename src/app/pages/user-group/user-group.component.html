@@ -29,6 +29,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr *ngIf="students.length === 0">
+                                <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                    No hay estudiantes pendientes de asignar a un grupo.
+                                </td>
+                            </tr>
                             <tr *ngFor="let student of students" class="bg-white border-b border-gray-200">
                                 <td class="px-6 py-4">{{ student.id }}</td>
                                 <td class="px-6 py-4">{{ student.first_name }}</td>

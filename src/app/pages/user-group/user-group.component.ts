@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 @Component({
   selector: 'app-user-group',
   standalone: true,
-  imports: [NgFor, RouterLink, NgIf, ReactiveFormsModule],
+  imports: [NgFor, NgIf, ReactiveFormsModule],
   templateUrl: './user-group.component.html',
   styleUrl: './user-group.component.css'
 })
@@ -40,7 +40,8 @@ export class UserGroupComponent implements OnInit {
     this.groupService.getUsersByRole().subscribe({
       next: (res) => {
         if (res.status === 'success') {
-          this.students = res.data;
+          // Solo estudiantes sin grupo asignado
+          this.students = res.data.filter((student: any) => !student.student_group || student.student_group.length === 0);
         } else {
           console.error('Error al traer los estudiantes:', res.msg);
         }
