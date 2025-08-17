@@ -89,10 +89,19 @@ export class SensorLogsService {
     // Eliminar IDs duplicados
     const uniqueIds = [...new Set(classroomIds)];
     
+    console.log('Obteniendo información para aulas:', uniqueIds);
+    
     // Crear un array de observables para obtener cada salón
     const classroomRequests = uniqueIds.map(id => 
       this.getClassroomInfo(id).pipe(
-        catchError(() => of({ id, name: `Salón ${id}`, location: 'No disponible' }))
+        map(classroom => {
+          console.log(`Aula ${id} obtenida:`, classroom);
+          return classroom;
+        }),
+        catchError(error => {
+          console.error(`Error al obtener aula ${id}:`, error);
+          return of({ id, name: `Aula ${id}`, location: 'No disponible' });
+        })
       )
     );
 
@@ -104,7 +113,12 @@ export class SensorLogsService {
             classroomMap.set(classroom.id, classroom);
           }
         });
+        console.log('Mapa final de aulas:', Array.from(classroomMap.entries()));
         return classroomMap;
+      }),
+      catchError(error => {
+        console.error('Error general al obtener aulas:', error);
+        return of(new Map());
       })
     );
   }
@@ -127,7 +141,19 @@ export class SensorLogsService {
 
   // Método para obtener información del salón (si la API lo soporta)
   getClassroomInfo(classroomId: number): Observable<ClassroomInfo> {
-    return this.http.get<ClassroomInfo>(`${this.baseUrl}/classrooms/${classroomId}`);
+    return this.http.get<any>(`${this.baseUrl}/classrooms/${classroomId}`).pipe(
+      map(response => {
+        if (response.status === 'success' && response.data) {
+          return response.data;
+        } else {
+          throw new Error(`Error en la respuesta de la API: ${response.msg || 'Respuesta inválida'}`);
+        }
+      }),
+      catchError(error => {
+        console.error(`Error al obtener aula ${classroomId}:`, error);
+        throw error;
+      })
+    );
   }
 }
 

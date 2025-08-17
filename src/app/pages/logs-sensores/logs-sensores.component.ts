@@ -86,11 +86,15 @@ export class LogsSensoresComponent implements OnInit {
       }
     });
 
-    console.log('IDs de usuarios encontrados:', userIds);
-    console.log('IDs de salones encontrados:', classroomIds);
+    // Eliminar IDs duplicados
+    const uniqueUserIds = [...new Set(userIds)];
+    const uniqueClassroomIds = [...new Set(classroomIds)];
 
-    const userRequest = this.sensorLogsService.getUsersInfo(userIds);
-    const classroomRequest = this.sensorLogsService.getClassroomsInfo(classroomIds);
+    console.log('IDs de usuarios encontrados:', uniqueUserIds);
+    console.log('IDs de salones encontrados:', uniqueClassroomIds);
+
+    const userRequest = this.sensorLogsService.getUsersInfo(uniqueUserIds);
+    const classroomRequest = this.sensorLogsService.getClassroomsInfo(uniqueClassroomIds);
 
     console.log('Iniciando llamadas a APIs de usuarios y salones...');
 
@@ -161,10 +165,16 @@ export class LogsSensoresComponent implements OnInit {
     if (log.response.data.accessLog && log.response.data.accessLog.classroom_id) {
       const classroomId = log.response.data.accessLog.classroom_id;
       const classroomInfo = this.classroomsMap.get(classroomId);
-      if (classroomInfo) {
+      
+      if (classroomInfo && classroomInfo.name) {
+        // Usar el nombre real del aula desde la API
+        console.log(`Aula encontrada para ID ${classroomId}:`, classroomInfo.name);
         return classroomInfo.name;
+      } else {
+        // Si no se puede obtener la información, mostrar el ID como fallback
+        console.log(`No se pudo obtener información para el aula ID ${classroomId}`);
+        return `Aula ${classroomId}`;
       }
-      return `Salón ${classroomId}`;
     }
     return '-';
   }
