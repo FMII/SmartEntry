@@ -3,6 +3,19 @@
         appearance: none;
         background: transparent;
     }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead th:first-child {
+        border-top-left-radius: 8px;
+    }
+
+    thead th:last-child {
+        border-top-right-radius: 8px;
+    }
 </style>
 <div class="grid grid-cols-12">
     <div class="col-span-12 ">
@@ -28,20 +41,21 @@
     <div class="col-span-12 px-2 py-1">
         <div class="p-2 text-sm">
             <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-8 bg-white border border-[#E8E8E8] p-2 rounded-lg">
+                <div
+                    class="h-full w-full touch-auto overflow-auto col-span-8 bg-white border border-[#E8E8E8] p-2 rounded-lg">
                     <div class="">
                         <canvas #barCanvas></canvas>
                     </div>
                 </div>
-                <div class="col-span-4 bg-white border border-[#E8E8E8] p-2 rounded-lg">
+                <div class="col-span-4 bg-white border border-[#E8E8E8] p-2 rounded-lg flex flex-col h-full">
                     <div class="col-span-12 px-4 py-2 border-b border-gray-100">
                         <div class="flex justify-between items-center">
                             <p class="text-[#0A0A0A] font-semibold text-md">Informacion del alumno</p>
                         </div>
                     </div>
-                    <div class="h-48 w-full touch-auto overflow-auto rounded-lg">
-                        <table class="table-auto w-full border border-gray-100">
-                            <thead class="text-gray-400 bg-gray-50 border border-gray-200">
+                    <div class="flex-1 flex flex-col">
+                        <table class="table-auto w-full mt-2">
+                            <thead class="text-gray-400 bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Grupo
                                     </th>
@@ -54,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let group of groups">
+                                <tr *ngFor="let group of paginatedGroups">
                                     <td
                                         class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
                                         {{ group.group_name }}</td>
@@ -67,9 +81,20 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-auto px-4 py-2">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-2 w-full justify-center">
+                                    <button (click)="goToPage(page - 1)" [disabled]="page === 1"
+                                        class="px-2 py-1 rounded bg-gray-100 text-gray-600 disabled:opacity-50">Anterior</button>
+                                    <span class="text-sm">Página {{ page }} de {{ totalPages }}</span>
+                                    <button (click)="goToPage(page + 1)" [disabled]="page === totalPages"
+                                        class="px-2 py-1 rounded bg-gray-100 text-gray-600 disabled:opacity-50">Siguiente</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
@@ -80,13 +105,23 @@
                 <div class="col-span-12 px-4 py-2 border-b border-gray-100">
                     <div class="flex justify-between items-center">
                         <p class="text-[#0A0A0A] font-semibold text-md">Asistencia por grupo</p>
-
+                        <!-- Filtro de fechas -->
+                        <form class="flex items-center gap-2" (submit)="onDateFilter($event)">
+                            <label class="text-xs text-gray-500">De:</label>
+                            <input type="date" class="border rounded px-2 py-1 text-xs" [(ngModel)]="startDate"
+                                name="startDate" />
+                            <label class="text-xs text-gray-500">a</label>
+                            <input type="date" class="border rounded px-2 py-1 text-xs" [(ngModel)]="endDate"
+                                name="endDate" />
+                            <button type="submit"
+                                class="ml-2 px-2 py-1 rounded bg-[#262626] text-white text-xs hover:bg-black">Filtrar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-span-12 px-4 py-2">
                     <div class="h-48 w-full touch-auto overflow-auto rounded-lg">
-                        <table class="table-auto w-full border border-gray-100">
-                            <thead class="text-gray-400 bg-gray-50 border border-gray-200">
+                        <table class="table-auto w-full">
+                            <thead class="text-gray-400 bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-1 text-sm font-medium text-left border border-gray-200">Nombre
                                     </th>
@@ -113,18 +148,18 @@
                                         {{ record.last_name }}</td>
                                     <td
                                         class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
-                                        {{ record.date | date:'shortDate' }}</td>
+                                        {{ formatearHoraUTC(record.date) }}</td>
                                     <td
                                         class="px-6 py-1 text-sm font-regular text-left border border-gray-200 capitalize">
                                         <span
                                             [ngClass]="{ 'text-[#28A745]': record.status === 'present', 'text-[#DC3545]': record.status === 'absent', 'text-[#FFC107]': record.status === 'late' }">
-                                            <i class="ti ti-circle-filled text-xs"></i> {{ record.status }}
+                                            <i class="ti ti-circle-filled text-xs"></i> {{
+                                            translateStatus(record.status) }}
                                         </span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>

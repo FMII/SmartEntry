@@ -16,8 +16,15 @@ export class GraphicsService {
     return this.http.get<TopAbsencesResponse>(`${this.baseUrl}/top-absences`);
   }
 
-  getAttendanceByGroup(groupId: number): Observable<GroupAttendanceResponse> {
-    const url = `${this.baseUrl}/attendance-by-group/${groupId}`;
+  getAttendanceByGroup(groupId: number, startDate?: string, endDate?: string): Observable<GroupAttendanceResponse> {
+    let url = `${this.baseUrl}/attendance-by-group/${groupId}`;
+    if (startDate && endDate) {
+      url += `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+    } else if (startDate) {
+      url += `?startDate=${encodeURIComponent(startDate)}`;
+    } else if (endDate) {
+      url += `?endDate=${encodeURIComponent(endDate)}`;
+    }
     return this.http.get<GroupAttendanceResponse>(url);
   }
 
