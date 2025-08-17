@@ -9,7 +9,6 @@ import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { WorkshopBlockadeComponent } from './pages/workshop-blockade/workshop-blockade.component';
 import { AcademicManagmentComponent } from './pages/academic-managment/academic-managment.component';
 import { SchedulesComponent } from './pages/schedules/schedules.component';
-import { StudentAssistancePanelComponent } from './pages/student-assistance-panel/student-assistance-panel.component';
 import { TeacherAssistancePanelComponent } from './pages/teacher-assistance-panel/teacher-assistance-panel.component';
 import { GroupManagementComponent } from './pages/group-management/group-management.component';
 import { CreateUserComponent } from './pages/create-user/create-user.component';
@@ -47,7 +46,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'control-panel', pathMatch: 'full' },
-      { path: 'student-assistance', component: StudentAssistancePanelComponent },
       { path: 'control-panel', component: TeacherAssistancePanelComponent },
       { path: 'user-management', component: UserManagementComponent },
       { path: 'group-management', component: GroupManagementComponent },
